@@ -4,4 +4,4 @@
 
 ## By: Tong Xu
 
-Complete react and django preproject by Dec 11, 2020.
+Complete react and django pre-project exercise by Dec 11, 2020.
