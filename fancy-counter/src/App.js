@@ -49,7 +49,7 @@ function App() {
                        }>Assign</a>
                     </div>
                 </div>
-                <div className="button has-addons">
+                <div className="buttons has-addons">
                   <button className="button is-primary"
                     onClick={() => dispatch({ value: counter + 1 })
                     }>Up</button>
@@ -58,7 +58,7 @@ function App() {
                   </button>
                 </div>
               </div>
-              <div className="column is-half-has-text-centered">
+              <div className="column is-half has-text-centered">
                 <h1 className="title">{counter}</h1>
               </div>
             </div>
