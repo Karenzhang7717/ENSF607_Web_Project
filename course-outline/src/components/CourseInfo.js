@@ -1,7 +1,8 @@
 import {useState} from 'react';
 
 function CourseInfo() {
-    // const [courseNumber, setCourseNumber] = useState("");
+  const [courseNumber, setCourseNumber] = useState("");
+  
   return (
     <div>
         <h1>1. Course Information</h1>
@@ -9,8 +10,9 @@ function CourseInfo() {
             <input className="input"
             type="text"
             placeholder="Enter course number"
-            // value={courseNumber}
-            // onChange={(e) => setCourseNumber(courseNumber)}
+            value={courseNumber}
+            onChange={(e) => setCourseNumber(e.target.value)}
+            onKeyDown={(e) => setCourseNumber(e.target.value)}
             />
             <h2>ENSF 409</h2> 
             <h2>Principles of Software Development</h2>
