@@ -3,7 +3,7 @@ import 'bulma/css/bulma.css';
 import CourseInfo from './components/CourseInfo';
 import LearnOutcome from './components/LearnOutcome';
 import Grade from './components/Grade';
-import Textbook from './components/Textbook';
+import GPA from './components/GPA';
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
         <CourseInfo />
         <LearnOutcome />
         <Grade />
-        <Textbook />
+        <GPA />
       </div>
     </nav>
   );
