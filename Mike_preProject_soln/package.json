@@ -1,0 +1,27 @@
+{
+  "name": "Mike_preProject_soln",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development ./courseoutlinemanager/frontend/src/index.js --output-path ./courseoutlinemanager/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./courseoutlinemanager/frontend/src/index.js --output-path ./courseoutlinemanager/frontend/static/frontend/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^5.10.2",
+    "webpack-cli": "^4.2.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
+  }
+}
