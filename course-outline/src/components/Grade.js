@@ -1,9 +1,11 @@
 
 
 import React from 'react';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 import MaterialTable from 'material-table';
-
+import Table from '@material-ui/core/Table';
 
 import { forwardRef } from 'react';
 
@@ -54,9 +56,9 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  function subtotal(weight) {
-    return weight.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-  }
+  // function subtotal(weight) {
+  //   return weight.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  // }
 
 
 
@@ -87,6 +89,8 @@ export default function Editable() {
       columns={columns}
       data={data}
       icons={tableIcons}
+
+    
       editable={{
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
@@ -117,12 +121,14 @@ export default function Editable() {
               
               resolve()
             }, 1000)
+            
           }),
-        
+          
+         
       }}
       
     />
-
+    
 
     
   )
