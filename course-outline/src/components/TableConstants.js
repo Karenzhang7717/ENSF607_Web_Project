@@ -18,20 +18,10 @@ import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove'; ``
+import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-
-
-function Grade() {
-  return (
-    <div>
-      <h1>3. Final Grade Determination</h1>
-    </div>
-  );
-
-}
 
 
 const tableIcons = {
@@ -54,76 +44,4 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-function subtotal(weight) {
-  return weight.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-
-
-
-export default function Editable() {
-  const { useState } = React;
-
-  const [columns, setColumns] = useState([
-    { title: 'Component', field: 'component' },
-    { title: 'Learning Outcomes', field: 'outcome', initialEditValue: 'enter learning outcomes' },
-    { title: 'Weight%', field: 'weight', type: 'numeric' },
-
-  ]);
-
-  const [data, setData] = useState([
-    { component: 'Assignments', outcome: '1-7', weight: 25 },
-    { component: 'Project', outcome: '1-7', weight: 10 },
-  ]);
-
-
-
-
-
-  return (
-    <
-      MaterialTable
-      title="Final Grade Determination"
-      columns={columns}
-      data={data}
-      icons={tableIcons}
-      editable={{
-        onRowAdd: newData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              setData([...data, newData]);
-
-              resolve();
-            }, 1000)
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataUpdate = [...data];
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-              setData([...dataUpdate]);
-
-              resolve();
-            }, 1000)
-          }),
-        onRowDelete: oldData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-
-              resolve()
-            }, 1000)
-          }),
-
-      }}
-
-    />
-
-
-
-  )
-}
+export const TableIcons = tableIcons; 
