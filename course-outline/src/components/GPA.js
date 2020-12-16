@@ -1,11 +1,8 @@
 
-
 import React from 'react';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+
 
 import MaterialTable from 'material-table';
-import Table from '@material-ui/core/Table';
 
 import { forwardRef } from 'react';
 
@@ -20,20 +17,11 @@ import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove'; ``
+import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-
-function Grade() {
-  return (
-    <div>
-      <h1>3. Final Grade Determination</h1>
-    </div>
-  );
-
-}
 
 
 const tableIcons = {
@@ -54,12 +42,7 @@ const tableIcons = {
   SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-};
-
-// function subtotal(weight) {
-//   return weight.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-// }
-
+  };
 
 
 
@@ -67,36 +50,46 @@ export default function Editable() {
   const { useState } = React;
 
   const [columns, setColumns] = useState([
-    { title: 'Component', field: 'component' },
-    { title: 'Learning Outcomes', field: 'outcome', initialEditValue: 'enter learning outcomes' },
-    { title: 'Weight%', field: 'weight', type: 'numeric' },
-
+    { title: 'Letter Grade', field: 'grade' },
+    { title: 'Total Mark (T)', field: 'mark'}
+   
+   
   ]);
 
   const [data, setData] = useState([
-    { component: 'Assignments', outcome: '1-7', weight: 25 },
-    { component: 'Project', outcome: '1-7', weight: 10 },
+    { grade: 'A+', mark: 'T>=95.0%'},
+    {grade:'A', mark:'90.0<=T<95.0%'},
+    {grade:'A-', mark:'85.0<=T<90.0%'},
+    {grade:'B+', mark:'80.0<=T<85.0%'},
+    {grade:'B', mark:'75.0<=T<80.0%'},
+    {grade:'B-',mark: '70.0<=T<75.0%'},
+    {grade:'C+',mark: '65.0<=T<70.0%'},
+    {grade:'C', mark:'60.0<=T<65.0%'},
+    {grade:'C-',mark: '56.0<=T<60.0%'},
+    {grade:'D+',mark: '53.0<=T<56.0%'},
+    {grade:'D', mark:'50.0<=T<53.0%'},
+    {grade:'F', mark:'T<50.0%'}
   ]);
-
-
-
+   
+ 
+  
 
 
   return (
     <
       MaterialTable
-      title="Final Grade Determination"
+      title="GPA Conversion"
       columns={columns}
       data={data}
       icons={tableIcons}
 
-
+    
       editable={{
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
               setData([...data, newData]);
-
+              
               resolve();
             }, 1000)
           }),
@@ -118,18 +111,17 @@ export default function Editable() {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               setData([...dataDelete]);
-
+              
               resolve()
             }, 1000)
-
+            
           }),
-
-
+          
+         
       }}
-
+      
     />
-
-
-
+    
+    
   )
 }
