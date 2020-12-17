@@ -20,7 +20,7 @@ import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove'; 
+import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
@@ -78,51 +78,58 @@ export default function Editable() {
 
 
   return (
-    <
-      MaterialTable
-      title="Final Grade Determination"
-      columns={columns}
-      data={data}
-      icons={tableIcons}
+    <div className="container">
+      <h1>3. Final Grade Determination</h1>
+      <
+        MaterialTable
+        title="Final Grade Determination"
+        columns={columns}
+        data={data}
+        icons={tableIcons}
+        options={
+          { search: false, paging: false }
+        }
 
 
-      editable={{
-        onRowAdd: newData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              setData([...data, newData]);
+        editable={{
+          onRowAdd: newData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                setData([...data, newData]);
 
-              resolve();
-            }, 1000)
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataUpdate = [...data];
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-              setData([...dataUpdate]);
+                resolve();
+              }, 1000)
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataUpdate = [...data];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                setData([...dataUpdate]);
 
-              resolve();
-            }, 1000)
-          }),
-        onRowDelete: oldData =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
+                resolve();
+              }, 1000)
+            }),
+          onRowDelete: oldData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataDelete = [...data];
+                const index = oldData.tableData.id;
+                dataDelete.splice(index, 1);
+                setData([...dataDelete]);
 
-              resolve()
-            }, 1000)
+                resolve()
+              }, 1000)
 
-          }),
+            }),
 
 
-      }}
+        }}
 
-    />
+      />
+      <br></br>
+    </div>
 
 
 
