@@ -25,17 +25,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-
-function Grade() {
-  return (
-    <div>
-      <h1>3. Final Grade Determination</h1>
-    </div>
-  );
-
-}
-
-
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -72,8 +61,6 @@ export default function Editable() {
     { component: 'Assignments', outcome: '1-7', weight: 25 },
     { component: 'Project', outcome: '1-7', weight: 10 },
   ]);
-
-  const [notes, setNotes] = useState("");
 
   return (
 
