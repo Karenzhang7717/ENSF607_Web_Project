@@ -13,8 +13,13 @@ const OutcomesTable = () => {
 
   ])
 
+  const paddingZero = {
+    padding: "0px"
+  }
+
   return (
     <MaterialTable
+      style={{ padding: '0px' }}
       options={
         { search: false, paging: false }
       }
@@ -63,14 +68,14 @@ const OutcomesTable = () => {
 function LearnOutcome() {
   const [outcomes, setOutcomes] = useState("Please enter a learning outcome!");
   return (
-    <div className='container'>
+    <div className="container" style={{ paddingLeft: "5px", margin: "0px" }}>
       <h1>2. Learning Outcomes</h1>
-      <div className='outcomes_table'>
+      <div className='outcomes_table' style={{ paddingLeft: "0px", margin: "0px" }}>
         <p>At the end of this course, you will be able to: </p>
         <OutcomesTable />
         <br></br>
       </div>
-    </div>
+    </div >
   );
 }
 
