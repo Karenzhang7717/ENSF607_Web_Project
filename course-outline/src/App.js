@@ -4,6 +4,7 @@ import CourseInfo from './components/CourseInfo';
 import LearnOutcome from './components/LearnOutcome';
 import Grade from './components/Grade';
 import GPA from './components/GPA';
+import Notes from './components/Notes';
 
 function App() {
 
@@ -22,7 +23,9 @@ function App() {
       <div className="App">
         <CourseInfo />
         <LearnOutcome />
-        <Grade />
+        <h1>3. Final Grade Determination</h1>
+        <Grade/>
+        <Notes/>
         <GPA />
       </div>
     </nav>

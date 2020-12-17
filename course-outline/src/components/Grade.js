@@ -73,13 +73,10 @@ export default function Editable() {
     { component: 'Project', outcome: '1-7', weight: 10 },
   ]);
 
-
-
-
+  const [notes, setNotes] = useState("");
 
   return (
-    <div className="container">
-      <h1>3. Final Grade Determination</h1>
+
       <
         MaterialTable
         title="Final Grade Determination"
@@ -128,8 +125,7 @@ export default function Editable() {
         }}
 
       />
-      <br></br>
-    </div>
+
 
 
 
