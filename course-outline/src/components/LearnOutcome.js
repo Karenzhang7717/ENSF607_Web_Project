@@ -60,18 +60,4 @@ const OutcomesTable = () => {
 }
 
 
-function LearnOutcome() {
-  const [outcomes, setOutcomes] = useState("Please enter a learning outcome!");
-  return (
-    <div className='container'>
-      <h1>2. Learning Outcomes</h1>
-      <div className='outcomes_table'>
-        <p>At the end of this course, you will be able to: </p>
-        <OutcomesTable />
-        <br></br>
-      </div>
-    </div>
-  );
-}
-
-export default LearnOutcome;
+export default OutcomesTable;

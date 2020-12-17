@@ -22,7 +22,10 @@ function App() {
       <br></br>
       <div className="App">
         <CourseInfo />
+        <h1>2. Learning Outcomes</h1>
+        <p>At the end of this course, you will be able to:</p>
         <LearnOutcome />
+        <br></br>
         <h1>3. Final Grade Determination</h1>
         <Grade/>
         <Notes/>
