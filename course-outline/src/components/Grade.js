@@ -1,14 +1,8 @@
 
 
 import React from 'react';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-
 import MaterialTable from 'material-table';
-import Table from '@material-ui/core/Table';
-
 import { forwardRef } from 'react';
-
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -52,7 +46,7 @@ export default function Editable() {
 
   const [columns, setColumns] = useState([
     { title: 'Component', field: 'component' },
-    { title: 'Learning Outcomes', field: 'outcome', initialEditValue: 'enter learning outcomes' },
+    { title: 'Learning Outcomes', field: 'outcome' },
     { title: 'Weight%', field: 'weight', type: 'numeric' },
 
   ]);
@@ -60,6 +54,7 @@ export default function Editable() {
   const [data, setData] = useState([
     { component: 'Assignments', outcome: '1-7', weight: 25 },
     { component: 'Project', outcome: '1-7', weight: 10 },
+    { component: 'Total', outcome: '', weight: 35}
   ]);
 
   return (
@@ -76,11 +71,21 @@ export default function Editable() {
 
 
         editable={{
+          isEditHidden: rowData => rowData.component === 'Total',
+          isDeleteHidden: rowData => rowData.component === 'Total',
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
-                setData([...data, newData]);
-
+                const comp = data.slice(0, -1);
+                const [total,] = data.reverse();
+                const newTotal = total.weight + newData.weight;
+                if (newTotal <= 100) {
+                  total.weight = newTotal;
+                  setData([...comp, newData, total]);
+                } else {
+                  setData([...comp, total]);
+                  alert('Grade components cannot exceed 100%!');
+                }
                 resolve();
               }, 1000)
             }),

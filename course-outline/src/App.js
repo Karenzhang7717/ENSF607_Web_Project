@@ -27,6 +27,7 @@ function App() {
         <LearnOutcome />
         <br></br>
         <h1>3. Final Grade Determination</h1>
+        <p>The final grade in this course will be based on the following components:</p>
         <Grade/>
         <Notes/>
         <GPA />
