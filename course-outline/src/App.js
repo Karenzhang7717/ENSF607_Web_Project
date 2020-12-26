@@ -8,6 +8,12 @@ import Notes from './components/Notes';
 
 function App() {
 
+  const style_buttons = { 
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    padding: '10px'
+  };
+
   return (
     <nav className="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
       <div>
@@ -15,9 +21,6 @@ function App() {
           <li className="is-active"><a href="#" aria-current="page">New Outline</a></li>
           <li><a href="#">Retrieve Last Saved Outline</a></li>
         </ul>
-      </div>
-      <div>
-        <button className="button">Save</button>
       </div>
       <br></br>
       <div className="App">
@@ -31,6 +34,10 @@ function App() {
         <Grade/>
         <Notes/>
         <GPA />
+      </div>
+      <div style={style_buttons}>
+        <button className="button">Clear All</button>
+        <button className="button">Save</button>
       </div>
     </nav>
   );

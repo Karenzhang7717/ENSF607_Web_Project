@@ -95,8 +95,8 @@ export default function Editable() {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
+                dataUpdate[dataUpdate.length - 1].weight += newData.weight - oldData.weight;
                 setData([...dataUpdate]);
-
                 resolve();
               }, 1000)
             }),
@@ -106,8 +106,8 @@ export default function Editable() {
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
+                dataDelete[dataDelete.length - 1].weight -= oldData.weight;
                 setData([...dataDelete]);
-
                 resolve()
               }, 1000)
 
