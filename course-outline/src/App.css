@@ -6,3 +6,19 @@ h2 {
   color: white;
   background-color: black;
 }
+
+h1 {
+  font-weight: bold !important; 
+  font-size: large !important; 
+}
+
+.guidelines li::before{
+  content: '\2022 ' !important;
+  color: #000000 !important;
+  white-space: "pre" !important; 
+}
+
+.guidelines li::after{
+  content: "\A" !important;
+  white-space: "pre" !important;
+}
