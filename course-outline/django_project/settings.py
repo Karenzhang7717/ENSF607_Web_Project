@@ -58,7 +58,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'course-outline/build')
+            os.path.join(BASE_DIR, 'react/build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -125,5 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'course-outline/build/static')
+    os.path.join(BASE_DIR, 'react/build/static')
 ]
