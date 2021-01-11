@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
 import { TableIcons } from "./TableConstants";
 
+function setLearningOutcomes(res) {
+  console.log(res)
+}
+
 const OutcomesTable = () => {
 
-  const [data, setData] = useState([
-    {
-      outcomeNum: "1",
-      outcomeDesc: "Test"
-    }
+  const [data, setData] = useState([])
+  const [hasError, setErrors] = useState(false)
 
-  ])
+  useEffect(() => {
+    async function fetchOutcomes() {
+      const res = await fetch("http://127.0.0.1:8000/api/learningoutcomes/")
+      console.log(res.json());
+      res.json().then(res => setLearningOutcomes(res.response)).catch(err => setErrors(err));
+    }
+    fetchOutcomes();
+  }, [])
 
   const paddingZero = {
     padding: "0px"
@@ -25,8 +33,8 @@ const OutcomesTable = () => {
       }
       columns={
         [
-          { title: "Outcome Number", field: "outcomeNum" },
-          { title: "Outcome Description", field: "outcomeDesc" },
+          { title: "Outcome Number", field: "learningOutcomeNum" },
+          { title: "Outcome Description", field: "outcomeDescription" },
         ]}
       title="Learning Outcomes"
       icons={TableIcons}
@@ -63,6 +71,5 @@ const OutcomesTable = () => {
     />
   )
 }
-
 
 export default OutcomesTable;

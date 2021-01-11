@@ -26,8 +26,11 @@ SECRET_KEY = '(sby1obk(8+s4e19!0o^d+b51=7nqkwfqhj)k%hl(ucqnnx-)o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost'
+]
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -41,8 +44,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'echos',
     'courseinfos',
-    'coursegrades'
-    
+    'coursegrades',
+    'learningoutcomes',
+    'graduateattributes',
+    'corsheaders'
+
 ]
 
 MIDDLEWARE = [
@@ -53,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'django_project.urls'
