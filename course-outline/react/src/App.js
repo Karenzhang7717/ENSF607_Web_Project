@@ -1,6 +1,8 @@
 import './App.css';
 import 'bulma/css/bulma.css';
+import { useState } from 'react';
 import CourseInfo from './components/CourseInfo';
+import CourseInfoStatic from './components/CourseInfoStatic';
 import LearnOutcome from './components/LearnOutcome';
 import Grade from './components/Grade';
 import GPA from './components/GPA';
@@ -16,17 +18,31 @@ function App() {
     padding: '10px'
   };
 
+  const [isNewForm, setIsNewForm] = useState(true);
+
+  const setCourseInfo = (isNewForm) => {
+    if (isNewForm) {
+      return <CourseInfo />
+    } else {
+      return <CourseInfoStatic />
+    }
+  }
+
   return (
     <nav className="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
       <div>
         <ul>
-          <li className="is-active"><a href="#" aria-current="page">New Outline</a></li>
-          <li><a href="#">Retrieve Last Saved Outline</a></li>
+          <li className={ isNewForm ? "is-active" : "" }
+          onClick={(e) => setIsNewForm(true)}>
+            <a href="#" aria-current="page">New Outline</a></li>
+          <li className={ ! isNewForm ? "is-active" : "" }
+          onClick={(e) => setIsNewForm(false)}>
+            <a href="#">Retrieve Last Saved Outline</a></li>
         </ul>
       </div>
       <br></br>
       <div className="App">
-        <CourseInfo />
+        { setCourseInfo(isNewForm) }
         <h1>2. Learning Outcomes</h1>
         <p>At the end of this course, you will be able to:</p>
         <LearnOutcome />
