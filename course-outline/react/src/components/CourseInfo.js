@@ -43,7 +43,6 @@ function CourseInfo() {
 
   return (
     <div>
-        <h1>1. Course Information</h1>
         <div style={style_input1}>
             <input className="input"
             type="text"

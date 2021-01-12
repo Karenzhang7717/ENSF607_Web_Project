@@ -42,6 +42,7 @@ function App() {
       </div>
       <br></br>
       <div className="App">
+        <h1>1. Course Information</h1>
         { setCourseInfo(isNewForm) }
         <h1>2. Learning Outcomes</h1>
         <p>At the end of this course, you will be able to:</p>
