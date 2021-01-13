@@ -28,23 +28,28 @@ function getCookie(name) {
   return cookieValue;
 }
 
+<<<<<<< HEAD
+const OutcomesTable = (props) => {
+  const courseNum = props.courseNum;
+  console.log(courseNum);
+=======
 const OutcomesTable = () => {
+>>>>>>> fe295412d4340ef8bdd7dcfde47007417445d617
   const [data, setData] = useState([])
   const [hasError, setErrors] = useState(false)
 
   const id = 3;
+
 
   useEffect(() => {
     async function fetchOutcomes() {
       console.log(id);
       axios.defaults.xsrfCookieName = 'csrftoken';
       axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-      // use cookies for targetting specific detail api view
-      // axios.get("http://127.0.0.1:8000/api/learningoutcomes/", { headers: { "X-CSRFToken": getCookie('csrftoken') } })
       axios.get("http://127.0.0.1:8000/api/learningoutcomes/")
         .then(function (response) {
           console.log(response.data);
-          setData(response.data.filter(x => x.courseNum == 2))
+          setData(response.data.filter(x => x.courseNum == courseNum))
         })
         .catch(function (error) {
           console.log(error)
