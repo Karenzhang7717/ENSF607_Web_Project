@@ -7,18 +7,32 @@ h2 {
   background-color: black;
 }
 
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #333;
+  font-size: 1.5em;
+}
+
+.new-form,
+.outline-list,
+.saved-form {
+  margin-top: 30px;
+}
+
 h1 {
-  font-weight: bold !important; 
-  font-size: large !important; 
+  font-weight: bold !important;
+  font-size: large !important;
 }
 
-.guidelines li::before{
-  content: '\2022 ' !important;
+.guidelines li::before {
+  content: "\2022 " !important;
   color: #000000 !important;
-  white-space: "pre" !important; 
+  white-space: "pre" !important;
 }
 
-.guidelines li::after{
+.guidelines li::after {
   content: "\A" !important;
   white-space: "pre" !important;
 }

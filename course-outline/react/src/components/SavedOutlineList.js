@@ -28,7 +28,7 @@ function SavedOutlineList() {
               {courseInfos[i].courseNum}
           </Link></li>
     )}
-    return <div>{list_outlines}</div>
+    return <div className='outline-list'>{list_outlines}</div>
   }
 
   return courseList();
