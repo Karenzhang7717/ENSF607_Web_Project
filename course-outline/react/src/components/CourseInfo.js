@@ -1,76 +1,100 @@
+import axios from 'axios'
 import {useState} from 'react';
+import {COURSEINFO_URL, STYLE_BUTTONS} from '../constants/index'
 
 
 function CourseInfo() {
-  const [courseNumber, setCourseNumber] = useState("");
-  const [courseName, setCourseName] = useState("");
-  const [courseInfo, setCourseInfo] = useState("");
-  const [courseHour, setCourseHour] = useState("");
-  const [courseCredit, setCourseCredit] = useState("");
-  const [calendarUrl, setCalendarUrl] = useState("");
-  const [hourNotEmpty, setHourNotEmpty] = useState(false);
-  const [creditNotEmpty, setCreditNotEmpty] = useState(false);
-  const [urlNotEmpty, setUrlNotEmpty] = useState(false);
+
+  // const [hourNotEmpty, setHourNotEmpty] = useState(false);
+  // const [creditNotEmpty, setCreditNotEmpty] = useState(false);
+  // const [urlNotEmpty, setUrlNotEmpty] = useState(false);
 
   const style_input1 = { 
     display: 'flex',
     flexDirection: 'column',
   };
 
-  const displayCourseHour = (e) => {
-    setCourseHour(e.target.value);
-    if (e.target.value !== '')
-      setHourNotEmpty(hourNotEmpty => true);
-    else
-      setHourNotEmpty(hourNotEmpty => false);
-  };
+  const [courseInfo, setCourseInfo] = useState({
+        courseNum: "",
+        courseName: "",
+        courseDesc: "",
+        courseHour: "",
+        credit: "",
+        link: ""
+  })
 
-  const displayCourseCredit = (e) => {
-    setCourseCredit(e.target.value);
-    if (e.target.value !== '')
-      setCreditNotEmpty(creditNotEmpty => true);
-    else
-      setCreditNotEmpty(creditNotEmpty => false);
-  };
+  const handleChange = (e) => {
+    setCourseInfo({
+      ...courseInfo,
+      [e.target.name]: e.target.value
+    })
+  }
 
-  const displayCalendarUrl = (e) => {
-    setCalendarUrl(e.target.value);
-    if (e.target.value !== '') 
-      setUrlNotEmpty(urlNotEmpty => true);
-    else 
-      setUrlNotEmpty(urlNotEmpty => false);
-  };
+  const sendCourseInfo = (data) => {
+    axios.post(COURSEINFO_URL, data)
+    .then(alert('Saved Successfully!'))
+    .catch(err => alert(err));
+  }
+
+  // const displayCourseHour = (e) => {
+  //   setCourseHour(e.target.value);
+  //   if (e.target.value !== '')
+  //     setHourNotEmpty(hourNotEmpty => true);
+  //   else
+  //     setHourNotEmpty(hourNotEmpty => false);
+  // };
+
+  // const displayCourseCredit = (e) => {
+  //   setCourseCredit(e.target.value);
+  //   if (e.target.value !== '')
+  //     setCreditNotEmpty(creditNotEmpty => true);
+  //   else
+  //     setCreditNotEmpty(creditNotEmpty => false);
+  // };
+
+  // const displayCalendarUrl = (e) => {
+  //   setCalendarUrl(e.target.value);
+  //   if (e.target.value !== '') 
+  //     setUrlNotEmpty(urlNotEmpty => true);
+  //   else 
+  //     setUrlNotEmpty(urlNotEmpty => false);
+  // };
 
   return (
     <div>
         <div style={style_input1}>
             <input className="input"
             type="text"
+            name='courseNum'
             placeholder="Enter course number"
-            value={courseNumber}
-            onChange={(e) => setCourseNumber(e.target.value)}
+            value={courseInfo.courseNum}
+            onChange={handleChange}
             />
             <input className="input"
             type="text"
+            name='courseName'
             placeholder="Enter course name"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
+            value={courseInfo.courseName}
+            onChange={handleChange}
             />
             <textarea className="input"
             style={{ height: '100px' }}
-            type="text"      
+            type="text"
+            name='courseDesc'      
             placeholder="Enter course information"
-            value={courseInfo}
-            onChange={(e) => setCourseInfo(e.target.value)}
+            value={courseInfo.courseDesc}
+            onChange={handleChange}
             />
             <div style={{display: 'flex'}}>
               <label style={{flex:'1'}}>Course Hours:</label>
               <input className="input"
               style={{flex:'4'}}
               type="text"
+              name="courseHour"
               placeholder="Enter course hours"
-              value={courseHour}
-              onChange={(e) => displayCourseHour(e)}
+              value={courseInfo.courseHour}
+              onChange={handleChange}
+              // onChange={(e) => displayCourseHour(e)}
               />
             </div>
             <div style={{display: 'flex'}}>
@@ -78,9 +102,11 @@ function CourseInfo() {
               <input className="input"
               style={{flex:'4'}}
               type="text"
+              name="credit"
               placeholder="Enter course credit"
-              value={courseCredit}
-              onChange={(e) => displayCourseCredit(e)}
+              value={courseInfo.credit}
+              onChange={handleChange}
+              // onChange={(e) => displayCourseCredit(e)}
               />
             </div>
             <div style={{display: 'flex'}}>
@@ -88,14 +114,16 @@ function CourseInfo() {
               <input className="input"
               style={{flex:'4'}}
               type="text"
+              name="link"
               placeholder="Enter calendar url"
-              value={calendarUrl}
-              onChange={(e) => displayCalendarUrl(e)}
+              value={courseInfo.link}
+              onChange={handleChange}
+              // onChange={(e) => displayCalendarUrl(e)}
               />
             </div>
         </div>
         <br></br>
-        <div>
+        {/* <div>
             <h2>{courseNumber}</h2> 
             <h2>{courseName}</h2> 
             <p>{courseInfo}</p>
@@ -117,8 +145,14 @@ function CourseInfo() {
               <a href={calendarUrl} style={{flex:'4'}}>{calendarUrl}</a>
             </div>
             )}
+        </div> */}
+        <div style={STYLE_BUTTONS}>
+          <button className="button">Clear All</button>
+          <button className="button"
+          onClick={(e) => sendCourseInfo(courseInfo)}
+          >Save</button>
         </div>
-        <br></br>
+
     </div>
   );
 }

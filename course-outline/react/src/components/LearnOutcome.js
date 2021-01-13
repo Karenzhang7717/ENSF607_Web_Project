@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
-import { useState, useReducer } from "react";
-import { TableIcons } from "./TableConstants";
+import { useState } from "react";
+import { TableIcons } from "../constants/TableConstants";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,7 +10,9 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 
+
 function getCookie(name) {
+
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
@@ -25,7 +27,6 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-
 
 const OutcomesTable = () => {
   const [data, setData] = useState([])

@@ -1,7 +1,8 @@
 import React from 'react';
 import MaterialTable from 'material-table';
-import { useState, useReducer } from "react";
-import { TableIcons } from "./TableConstants";
+import { useState } from "react";
+import { TableIcons } from "../constants/TableConstants";
+
 
 const GraduateAttributesTable = () => {
 
@@ -11,7 +12,6 @@ const GraduateAttributesTable = () => {
             gradAttribute: "A1. Test",
             instructionLevel: "A (Applied)"
         }
-
     ])
 
     const paddingZero = {

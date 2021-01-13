@@ -12,12 +12,6 @@ import CEABGuidelines from "./components/CEABGuidelines";
 
 function App() {
 
-  const style_buttons = {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    padding: '10px'
-  };
-
   const [isNewForm, setIsNewForm] = useState(true);
 
   const setCourseInfo = (isNewForm) => {
@@ -58,10 +52,6 @@ function App() {
         <Grade />
         <Notes />
         <GPA />
-      </div>
-      <div style={style_buttons}>
-        <button className="button">Clear All</button>
-        <button className="button">Save</button>
       </div>
     </nav >
   );
