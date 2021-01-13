@@ -2,67 +2,81 @@ import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
 import { TableIcons } from "../constants/TableConstants";
-import { GPA_URL} from '../constants/index.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import axios from 'axios';
 
 
-function GPAStatic() {
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 
-    const [courseGPA, setGPA] = useState({
-        letterGrade: "",
-        totalMark: ""
-    })
 
-    const updateGPA = (data) => {
-        console.log(data);
-        setGPA({
-            ...courseGPA,
-            letterGrade: data.letterGrade,
-            totalMark: data.totalMark
+const GPAStaticTable = () => {
+  const [data, setData] = useState([])
+  const [hasError, setErrors] = useState(false)
+
+  const id = 2;
+
+  useEffect(() => {
+    async function fetchGPA() {
+      console.log(id);
+      axios.defaults.xsrfCookieName = 'csrftoken';
+      axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+      
+      axios.get("http://127.0.0.1:8000/api/gpaconversion/")
+        .then(function (response) {
+          console.log(response.data);
+          setData(response.data)
+        })
+        .catch(function (error) {
+          console.log(error)
         })
 
+     
     }
+    fetchGPA();
+  }, [])
 
-    useEffect(() => {
-        async function fetchGPA() {
-            const res = await fetch(GPA_URL);
-            res.json()
-            .then(data => updateGPA(data[0]))
-            .catch(err => alert(err));
-        }
-        fetchGPA();
-    }, [])
-
-   
-
-
-    return (
-      <MaterialTable
+  console.log(data);
+  return (
+    <MaterialTable
       style={{ padding: '0px' }}
       options={
-        { search: false, paging: false}
+        { search: false, paging: false }
       }
       columns={
         [
+          
     { title: 'Letter Grade', field: 'letterGrade' },
     { title: 'Total Mark', field: 'totalMark' }
          
         ]}
       title="GPA Conversion"
       icons={TableIcons}
-      
-              data={[
-                { letterGrade: courseGPA.letterGrade, totalMark: courseGPA.totalMark},
-                { letterGrade: courseGPA.letterGrade, totalMark: courseGPA.totalMark}
-               
-              ]}
+      data={data}
+     
     />
- 
-  );
+  )
 }
 
-export default GPAStatic;
-
-
+export default GPAStaticTable;
 
 
 

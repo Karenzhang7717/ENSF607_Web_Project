@@ -2,43 +2,60 @@ import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
 import { TableIcons } from "../constants/TableConstants";
-import { COURSEGRADE_URL} from '../constants/index.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import axios from 'axios';
 
 
-function GradeStatic() {
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 
-    const [courseGrades, setGrades] = useState({
-        courseComponent: "",
-        courseOutcomes: "",
-        courseWeight: ""
-    })
+const GradesStaticTable = () => {
+  const [data, setData] = useState([])
+  const [hasError, setErrors] = useState(false)
 
-    const updateCourseGrade = (data) => {
-        console.log(data);
-        setGrades({
-            ...courseGrades,
-            courseComponent: data.courseComponent,
-            courseOutcomes: data.courseOutcomes,
-            courseWeight: data.courseWeight
+  const id = 3;
+
+  useEffect(() => {
+    async function fetchGrades() {
+      console.log(id);
+      axios.defaults.xsrfCookieName = 'csrftoken';
+      axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+      // use cookies for targetting specific detail api view
+      // axios.get("http://127.0.0.1:8000/api/coursegrades/", { headers: { "X-CSRFToken": getCookie('csrftoken') } })
+      axios.get("http://127.0.0.1:8000/api/coursegrades/")
+        .then(function (response) {
+          console.log(response.data);
+         setData(response.data)
+        })
+        .catch(function (error) {
+          console.log(error)
         })
 
     }
+    fetchGrades();
+  }, [])
 
-    useEffect(() => {
-        async function fetchCourseGrade() {
-            const res = await fetch(COURSEGRADE_URL);
-            res.json()
-            .then(data => updateCourseGrade(data[0]))
-            .catch(err => alert(err));
-        }
-        fetchCourseGrade();
-    }, [])
-
-   
-
-
-    return (
-      <MaterialTable
+  console.log(data);
+  return (
+    <MaterialTable
       style={{ padding: '0px' }}
       options={
         { search: false, paging: false }
@@ -52,19 +69,12 @@ function GradeStatic() {
         ]}
       title="Course Grades"
       icons={TableIcons}
-      
-              data={[
-                { courseComponent: courseGrades.courseComponent, courseOutcomes: courseGrades.courseOutcomes, courseWeight:courseGrades.courseWeight }
-               
-              ]}
+      data={data}
+    
     />
- 
-  );
+  )
 }
 
-export default GradeStatic;
-
-
-
+export default GradesStaticTable;
 
 
