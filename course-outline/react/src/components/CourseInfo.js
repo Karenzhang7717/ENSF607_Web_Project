@@ -36,6 +36,18 @@ function CourseInfo() {
     .catch(err => alert(err));
   }
 
+  const clearFields = (data) => {
+    setCourseInfo({
+      ...courseInfo,
+      courseNum: "",
+      courseName: "",
+      courseDesc: "",
+      courseHour: "",
+      credit: "",
+      link: ""
+    })
+  }
+
   // const displayCourseHour = (e) => {
   //   setCourseHour(e.target.value);
   //   if (e.target.value !== '')
@@ -147,7 +159,9 @@ function CourseInfo() {
             )}
         </div> */}
         <div style={STYLE_BUTTONS}>
-          <button className="button">Clear All</button>
+          <button className="button"
+          onClick={(e) => clearFields(courseInfo)}
+          >Clear All</button>
           <button className="button"
           onClick={(e) => sendCourseInfo(courseInfo)}
           >Save</button>
