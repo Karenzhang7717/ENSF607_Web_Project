@@ -1,82 +1,108 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
-import { TableIcons } from "../constants/TableConstants";
+import { useState, useReducer } from "react";
+import { TableIcons } from "./TableConstants";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import axios from 'axios';
 
 
-export default function Editable() {
-  const { useState } = React;
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 
-  const [columns, setColumns] = useState([
-    { title: 'Component', field: 'component' },
-    { title: 'Learning Outcomes', field: 'outcome' },
-    { title: 'Weight%', field: 'weight', type: 'numeric' },
 
-  ]);
+const GradesTable = () => {
+  const [data, setData] = useState([])
+  const [hasError, setErrors] = useState(false)
 
-  const [data, setData] = useState([
-    { component: 'Assignments', outcome: '1-7', weight: 25 },
-    { component: 'Project', outcome: '1-7', weight: 10 },
-    { component: 'Total', outcome: '', weight: 35}
-  ]);
+  const id = 3;
 
+  useEffect(() => {
+    async function fetchGrades() {
+      console.log(id);
+      axios.defaults.xsrfCookieName = 'csrftoken';
+      axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+      // use cookies for targetting specific detail api view
+      // axios.get("http://127.0.0.1:8000/api/coursegrades/", { headers: { "X-CSRFToken": getCookie('csrftoken') } })
+      axios.get("http://127.0.0.1:8000/api/coursegrades/")
+        .then(function (response) {
+          console.log(response.data);
+         setData(response.data)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+     
+    }
+    fetchGrades();
+  }, [])
+
+  console.log(data);
   return (
-
-      <
-        MaterialTable
-        title="Final Grade Determination"
-        columns={columns}
-        data={data}
-        icons={TableIcons}
-        options={
-          { search: false, paging: false }
-        }
-
-        editable={{
-          isEditHidden: rowData => rowData.component === 'Total',
-          isDeleteHidden: rowData => rowData.component === 'Total',
-
-          onRowAdd: newData =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const comp = data.slice(0, -1);
-                const [total,] = data.reverse();
-                const newTotal = total.weight + newData.weight;
-                if (newTotal <= 100) {
-                  total.weight = newTotal;
-                  setData([...comp, newData, total]);
-                } else {
-                  setData([...comp, total]);
-                  alert('Grade components cannot exceed 100%!');
-                }
-                resolve();
-              }, 1000)
-            }),
-
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const dataUpdate = [...data];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
-                dataUpdate[dataUpdate.length - 1].weight += newData.weight - oldData.weight;
-                setData([...dataUpdate]);
-                resolve();
-              }, 1000)
-            }),
-
-          onRowDelete: oldData =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                dataDelete[dataDelete.length - 1].weight -= oldData.weight;
-                setData([...dataDelete]);
-                resolve()
-              }, 1000)
-            }),
-        }}
-
-      />
+    <MaterialTable
+      style={{ padding: '0px' }}
+      options={
+        { search: false, paging: false }
+      }
+      columns={
+        [
+    { title: 'Component', field: 'courseComponent' },
+    { title: 'Learning Outcomes', field: 'courseOutcomes' },
+    { title: 'Weight%', field: 'courseWeight' }
+         
+        ]}
+      title="Course Grades"
+      icons={TableIcons}
+      data={data}
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+              resolve();
+            }, 1000)
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              resolve()
+            }, 1000)
+          }),
+      }}
+    />
   )
 }
+
+export default GradesTable;
