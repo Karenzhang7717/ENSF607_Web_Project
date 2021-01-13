@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { COURSEINFO_URL} from '../constants/index.js'
 
-function CourseInfoStatic() {
+function CourseInfoStatic(props) {
 
     const [courseInfo, setCourseInfo] = useState({
         courseNum: "",
@@ -13,9 +13,14 @@ function CourseInfoStatic() {
     })
 
     const updateCourseInfo = (arr) => {
-      const data = arr[0];
-      console.log(arr);
-      console.log(data);
+      console.log(props)
+      let i, data;
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i].courseNum === props.courseNum) {
+          data = arr[i];
+          break;
+        }
+      }
       setCourseInfo({
         ...courseInfo,
         courseNum: data.courseNum,

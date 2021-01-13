@@ -25,7 +25,7 @@ function App() {
       <Switch>
         <Route path="/" component={NewForm} exact/>
         <Route path="/saved-forms" component={SavedOutlineList} exact/>
-        <Route path="/saved-forms/:id" component={SavedForm}/>
+        <Route path="/saved-forms/:courseNum" component={SavedForm}/>
       </Switch>
     </Router>
   );

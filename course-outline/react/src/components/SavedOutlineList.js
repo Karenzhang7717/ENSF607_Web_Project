@@ -13,7 +13,6 @@ function SavedOutlineList() {
       res.json()
       .then(data => {
         setCourseInfos(data);
-        console.log(courseInfos);
       })
       .catch(err => alert(err));
     }
@@ -24,8 +23,8 @@ function SavedOutlineList() {
     const list_outlines = [];
     for (let i = 0; i < courseInfos.length; i++) {
       list_outlines.push(
-        <li>
-          <Link to={`/saved-forms/${courseInfos[i].id}`}>
+        <li key={courseInfos[i].courseNum}>
+          <Link to={`/saved-forms/${courseInfos[i].courseNum}`}>
               {courseInfos[i].courseNum}
           </Link></li>
     )}
