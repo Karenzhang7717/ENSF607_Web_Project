@@ -10,7 +10,7 @@ function NewForm() {
 
   return (
 
-    <div className="App">
+    <div className="new-form">
         <h1>1. Course Information</h1>
         <CourseInfo />
         <h1>2. Learning Outcomes</h1>
