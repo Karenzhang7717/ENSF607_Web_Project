@@ -28,13 +28,9 @@ function getCookie(name) {
   return cookieValue;
 }
 
-<<<<<<< HEAD
 const OutcomesTable = (props) => {
   const courseNum = props.courseNum;
   console.log(courseNum);
-=======
-const OutcomesTable = () => {
->>>>>>> fe295412d4340ef8bdd7dcfde47007417445d617
   const [data, setData] = useState([])
   const [hasError, setErrors] = useState(false)
 
