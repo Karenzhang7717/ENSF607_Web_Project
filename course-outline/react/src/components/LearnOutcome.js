@@ -13,22 +13,22 @@ import { LEARNINGOUTCOME_URL } from "../constants/index";
 // import { getCourseNum } from "./Courseinfo";
 
 
-function getCookie(name) {
+// function getCookie(name) {
 
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+//   let cookieValue = null;
+//   if (document.cookie && document.cookie !== '') {
+//     const cookies = document.cookie.split(';');
+//     for (let i = 0; i < cookies.length; i++) {
+//       const cookie = cookies[i].trim();
+//       // Does this cookie string begin with the name we want?
+//       if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//         break;
+//       }
+//     }
+//   }
+//   return cookieValue;
+// }
 
 const OutcomesTable = (props) => {
   const courseNum = props.courseNum;
@@ -38,8 +38,8 @@ const OutcomesTable = (props) => {
 
   useEffect(() => {
     async function fetchOutcomes() {
-      axios.defaults.xsrfCookieName = 'csrftoken';
-      axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+      // axios.defaults.xsrfCookieName = 'csrftoken';
+      // axios.defaults.xsrfHeaderName = 'X-CSRFToken';
       axios.get(LEARNINGOUTCOME_URL)
         .then(function (response) {
           setData(response.data.filter(x => x.courseNum == courseNum));
