@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
-import { TableIcons } from "./TableConstants";
+import { TableIcons } from "../constants/TableConstants";
 import {
   BrowserRouter as Router,
   Switch,

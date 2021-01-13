@@ -1,5 +1,6 @@
 import React from 'react';
 import { forwardRef } from 'react';
+import MaterialTable from 'material-table';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';

@@ -5,7 +5,9 @@ import CourseInfo from './components/CourseInfo';
 import CourseInfoStatic from './components/CourseInfoStatic';
 import LearnOutcome from './components/LearnOutcome';
 import Grade from './components/Grade';
+import GradeStatic from './components/GradeStatic';
 import GPA from './components/GPA';
+import GPAStatic from './components/GPAStatic';
 import Notes from './components/Notes';
 import GraduateAttributesTable from "./components/GraduateAttributes";
 import CEABGuidelines from "./components/CEABGuidelines";
@@ -19,6 +21,24 @@ function App() {
       return <CourseInfo />
     } else {
       return <CourseInfoStatic />
+    }
+  }
+
+  const setGrade = (isNewForm) => {
+    if (isNewForm) {
+      return <Grade />
+    } 
+    else {
+      return <GradeStatic />
+    }
+  }
+
+  const setGPA = (isNewForm) => {
+    if (isNewForm) {
+      return <GPA />
+    } 
+    else {
+      return <GPAStatic />
     }
   }
 
@@ -49,9 +69,9 @@ function App() {
         <CEABGuidelines />
         <h1>3. Final Grade Determination</h1>
         <p>The final grade in this course will be based on the following components:</p>
-        <Grade />
+        { setGrade(isNewForm) }
         <Notes />
-        <GPA />
+        { setGPA(isNewForm) }
       </div>
     </nav >
   );
