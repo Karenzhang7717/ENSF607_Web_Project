@@ -1,9 +1,9 @@
 import CourseInfoStatic from './CourseInfoStatic';
-import LearnOutcome from './LearnOutcome';
+import LearnOutcomeStatic from './LearnOutcomeStatic';
 import GradeStatic from './GradeStatic';
 import GPAStatic from './GPAStatic';
 import Notes from './Notes';
-import GraduateAttributesTable from "./GraduateAttributes";
+import GraduateAttributesTableStatic from "./GraduateAttributesStatic";
 import CEABGuidelines from "./CEABGuidelines";
 
 function SavedForm() {
@@ -15,11 +15,11 @@ function SavedForm() {
         <CourseInfoStatic />
         <h1>2. Learning Outcomes</h1>
         <p>At the end of this course, you will be able to:</p>
-        <LearnOutcome />
+        <LearnOutcomeStatic />
         <br></br>
         <p style={{ wordBreak: 'break-all', whiteSpace: "normal" }}>Graduate Attributes are generic characteristics specified by the CEAB (Canadian Engineering Accreditation Board), expected to be exhibited by graduates of Canadian engineering schools. This table summarizes how the Learning Outcomes relate to key Graduate Attributes addressed in this course.</p>
         <br></br>
-        <GraduateAttributesTable />
+        <GraduateAttributesTableStatic />
         <br></br>
         <CEABGuidelines />
         <h1>3. Final Grade Determination</h1>
