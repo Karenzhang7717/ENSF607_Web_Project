@@ -12,17 +12,19 @@ function CourseInfoStatic() {
         link: ""
     })
 
-    const updateCourseInfo = (data) => {
-        console.log(data);
-        setCourseInfo({
-            ...courseInfo,
-            courseNum: data.courseNum,
-            courseName: data.courseName,
-            courseDesc: data.courseDesc,
-            courseHour: data.courseDesc,
-            credit: data.credit,
-            link: data.link
-        })
+    const updateCourseInfo = (arr) => {
+      const data = arr[0];
+      console.log(arr);
+      console.log(data);
+      setCourseInfo({
+        ...courseInfo,
+        courseNum: data.courseNum,
+        courseName: data.courseName,
+        courseDesc: data.courseDesc,
+        courseHour: data.courseDesc,
+        credit: data.credit,
+        link: data.link
+      })
 
     }
 
@@ -30,7 +32,7 @@ function CourseInfoStatic() {
         async function fetchCourseInfo() {
             const res = await fetch(COURSEINFO_URL);
             res.json()
-            .then(data => updateCourseInfo(data[0]))
+            .then(data => updateCourseInfo(data))
             .catch(err => alert(err));
         }
         fetchCourseInfo();
