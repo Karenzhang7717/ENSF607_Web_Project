@@ -9,6 +9,8 @@ import {
   Link
 } from "react-router-dom";
 import axios from 'axios';
+import { LEARNINGOUTCOME_URL } from "../constants/index";
+import { getCourseNum } from "./Courseinfo";
 
 
 function getCookie(name) {
@@ -30,36 +32,36 @@ function getCookie(name) {
 
 const OutcomesTable = (props) => {
   const courseNum = props.courseNum;
-  console.log(courseNum);
-  const [data, setData] = useState([])
-  const [hasError, setErrors] = useState(false)
-
-  const id = 3;
-
+  console.log("courseNum " + courseNum);
+  const [data, setData] = useState([]);
+  const [hasError, setErrors] = useState(false);
 
   useEffect(() => {
     async function fetchOutcomes() {
-      console.log(id);
       axios.defaults.xsrfCookieName = 'csrftoken';
       axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-      axios.get("http://127.0.0.1:8000/api/learningoutcomes/")
+      axios.get(LEARNINGOUTCOME_URL)
         .then(function (response) {
-          console.log(response.data);
-          setData(response.data.filter(x => x.courseNum == courseNum))
+          setData(response.data.filter(x => x.courseNum == courseNum));
         })
         .catch(function (error) {
           console.log(error)
         })
-
-      // OTHER VALID OPTIONS: 
-      // const res = await fetch("http://127.0.0.1:8000/api/learningoutcomes/" + id, { headers: { "Content-Type": 'application/json' } })
-      // const res = await fetch("http://127.0.0.1:8000/api/learningoutcomes/");
-      // res.json().then(res => setData(res)).catch(err => setErrors(err));
     }
     fetchOutcomes();
   }, [])
 
+  const handleRowAdd = (newData, resolve) => {
+    setData([...data, newData]);
+    resolve();
+  }
+
   console.log(data);
+  console.log("course number from courseinfos: " + getCourseNum())
+
+
+
+
   return (
     <MaterialTable
       style={{ padding: '0px' }}
@@ -78,8 +80,7 @@ const OutcomesTable = (props) => {
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              setData([...data, newData]);
-              resolve();
+              handleRowAdd(newData, resolve)
             }, 1000)
           }),
         onRowUpdate: (newData, oldData) =>
@@ -89,6 +90,7 @@ const OutcomesTable = (props) => {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setData([...dataUpdate]);
+              console.log(data);
               resolve();
             }, 1000)
           }),
