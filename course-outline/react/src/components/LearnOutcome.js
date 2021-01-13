@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import { LEARNINGOUTCOME_URL } from "../constants/index";
-import { getCourseNum } from "./Courseinfo";
+// import { getCourseNum } from "./Courseinfo";
 
 
 function getCookie(name) {
@@ -57,7 +57,7 @@ const OutcomesTable = (props) => {
   }
 
   console.log(data);
-  console.log("course number from courseinfos: " + getCourseNum())
+  // console.log("course number from courseinfos: " + getCourseNum())
 
 
 
