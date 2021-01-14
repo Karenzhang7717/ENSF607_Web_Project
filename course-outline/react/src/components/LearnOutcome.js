@@ -32,6 +32,7 @@ import { LEARNINGOUTCOME_URL } from "../constants/index";
 
 const OutcomesTable = (props) => {
   const courseNum = props.courseNum;
+  const newOutline = props.newOutline;
   console.log("courseNum " + courseNum);
   const [data, setData] = useState([]);
   const [hasError, setErrors] = useState(false);
@@ -40,22 +41,24 @@ const OutcomesTable = (props) => {
     async function fetchOutcomes() {
       axios.get(LEARNINGOUTCOME_URL)
         .then(function (response) {
-          console.log(response);
           setData(response.data.filter(x => x.courseNum == courseNum));
         })
         .catch(function (error) {
           console.log(error)
         })
     }
-    fetchOutcomes();
-  }, [])
+    if (!newOutline) {
+      fetchOutcomes();
+    }
+    if (data) {
+      console.log("data is being sent");
+      props.onChange(data);
+    }
+  }, [data])
 
   const handleRowAdd = (newData, resolve) => {
-    console.log("onRowAdd");
+    console.log("onRowAdd newData: " + newData[0]);
     setData([...data, newData]);
-    // let dataWithCourse = data.map(x => x[courseNum] = courseNum);
-    let dataWithCourse = data;
-    console.log(data);
     resolve();
   }
 
@@ -77,7 +80,19 @@ const OutcomesTable = (props) => {
     resolve()
   }
 
-  console.log(data);
+  // const addCourseNum = () => {
+  //   for (let i = 0; i < data.length; i++) {
+  //     data[i].courseNum = courseNum;
+  //     console.log(data[i]);
+  //   }
+  // }
+  // addCourseNum();
+
+  // props.onChange(data);
+
+
+
+  // console.log(data);
   // console.log("course number from courseinfos: " + getCourseNum())
 
 
@@ -91,6 +106,7 @@ const OutcomesTable = (props) => {
         [
           { title: "Outcome Number", field: "learningOutcomeNum" },
           { title: "Outcome Description", field: "outcomeDescription" },
+          { title: "Course Number", field: "courseNum", hidden: true, initialEditValue: { courseNum } }
         ]}
       title="Learning Outcomes"
       icons={TableIcons}
@@ -101,7 +117,7 @@ const OutcomesTable = (props) => {
             setTimeout(() => {
               handleRowAdd(newData, resolve);
             }, 1000)
-          }),
+          }).then(console.log("Hello")),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
