@@ -35,6 +35,7 @@ function NewForm() {
       <Grade />
       <Notes />
       <GPA />
+      <br></br>
     </div>
 
   );
