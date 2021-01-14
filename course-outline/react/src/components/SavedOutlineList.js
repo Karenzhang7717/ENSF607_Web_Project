@@ -30,8 +30,8 @@ function SavedOutlineList() {
         <li key={courseInfos[i].courseNum}>
           <h3 style={{display : 'inline-block'}}>{courseInfos[i].courseNum}</h3>
           <VisibilityIcon className='icon' onClick={(e) => window.location.href=`/saved-forms/${courseInfos[i].courseNum}`}/>
-          <EditIcon className='icon'/>
-          <DeleteIcon className='icon'/>
+          <EditIcon className='icon not-implemented'/>
+          <DeleteIcon className='icon not-implemented'/>
         </li>
     )}
     return <div className='outline-list'>{list_outlines}</div>
