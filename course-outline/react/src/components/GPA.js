@@ -59,7 +59,7 @@ const GPATable = (props) => {
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
       // setData([...dataUpdate]);
-      props.onChange(data)
+      props.onChange([...dataUpdate]);
       resolve();
 
     } else {
@@ -72,12 +72,9 @@ const GPATable = (props) => {
     const dataDelete = [...data];
     const index = oldData.tableData.id;
     dataDelete.splice(index, 1);
-    props.onChange(data)
+    props.onChange([...dataDelete]);
     resolve()
   }
-
-
-
   return (
     <MaterialTable
       style={{ padding: '0px' }}
@@ -139,7 +136,7 @@ const GPATable = (props) => {
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              handleRowDelete(oldData);
+              handleRowDelete(oldData, resolve);
             }, 1000)
           }),
 

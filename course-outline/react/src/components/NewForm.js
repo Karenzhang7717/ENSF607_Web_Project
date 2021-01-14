@@ -6,18 +6,18 @@ import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
 import { useRef, useState, useEffect } from 'react';
-import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL } from '../constants/index'
+import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL,GPA_URL,COURSEGRADE_URL } from '../constants/index'
 import axios from 'axios'
 
 function NewForm() {
 
   const [clearAll, setClear] = useState(false);
-  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: "", gpa: "" })
+  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] })
 
   useEffect(() => {
     if (clearAll) {
       console.log("From parent, clear all!")
-      setState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: "", gpa: "" });
+      setState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] });
     }
   }, [clearAll])
 
@@ -52,6 +52,20 @@ function NewForm() {
       console.log(thisData);
       axios.post(GRADUATEATTRIBUTES_URL, thisData);
     }
+    for (let i = 0; i < state.gpa.length; i++) {
+      let thisData = state.gpa[i];
+      thisData.courseNum = state.courseNum;
+      console.log(thisData);
+      axios.post(GPA_URL, thisData);
+    }
+    for (let i = 0; i < state.grades.length; i++) {
+      let thisData = state.grades[i];
+      thisData.courseNum = state.courseNum;
+      console.log(thisData);
+      axios.post(COURSEGRADE_URL, thisData);
+    }
+
+
     alert("saved successfully");
   }
 
@@ -79,9 +93,9 @@ function NewForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <Grade courseNum={state.courseNum} newGrade={true} newOutline={true} onChange={onGradeChange} />
+      <Grade data={state.grades} courseNum={state.courseNum} newOutline={true} onChange={onGradeChange} />
       <Notes />
-      <GPA courseNum={state.courseNum} newGPA={true} newOutline={true} onChange={onGPAChange} />
+      <GPA data={state.gpa} courseNum={state.courseNum} newOutline={true} onChange={onGPAChange} />
       <div style={STYLE_BUTTONS}>
         <button className="button"
           onClick={(e) => setClear(true)}
