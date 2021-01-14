@@ -1,33 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState } from "react";
 import { TableIcons } from "../constants/TableConstants";
+import axios from 'axios';
+import { GRADUATEATTRIBUTES_URL } from "../constants/index";
 
 
-const GraduateAttributesTable = () => {
+const GraduateAttributesTable = (props) => {
+    const courseNum = props.courseNum;
+    const newOutline = props.newOutline;
+    const data = props.data;
+    const [existingData, setExistingData] = useState([]);
 
-    const [data, setData] = useState([
-        {
-            outcomeNum: "1",
-            gradAttribute: "A1. Test",
-            instructionLevel: "A (Applied)"
+    useEffect(() => {
+        async function fetchAttributes() {
+            axios.get(GRADUATEATTRIBUTES_URL)
+                .then(function (response) {
+                    console.log(response.data);
+                    setExistingData(response.data.filter(x => x.courseNum == courseNum));
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         }
-    ])
-
-    const paddingZero = {
-        padding: "0px"
-    }
+        if (!newOutline) {
+            fetchAttributes();
+        }
+    }, [])
 
     return (
         <MaterialTable
-            style={paddingZero}
+            style={{ padding: '0px' }}
             options={
                 { search: false, paging: false }
             }
             columns={
                 [
-                    { title: "Learning Outcome", field: "outcomeNum" },
-                    { title: "Graduate Attribute", field: "gradAttribute" },
+                    { title: "Learning Outcome", field: "learningOutcomeNum" },
+                    { title: "Graduate Attribute", field: "graduateAttribute" },
                     { title: "Instruction Level", field: "instructionLevel" }
                 ]}
             title="Graduate Attributes"
@@ -37,7 +47,8 @@ const GraduateAttributesTable = () => {
                 onRowAdd: newData =>
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
-                            setData([...data, newData]);
+                            // setData([...data, newData]);
+                            props.onChange([...data, newData])
                             resolve();
                         }, 1000)
                     }),
@@ -47,7 +58,8 @@ const GraduateAttributesTable = () => {
                             const dataUpdate = [...data];
                             const index = oldData.tableData.id;
                             dataUpdate[index] = newData;
-                            setData([...dataUpdate]);
+                            // setData([...dataUpdate]);
+                            // props.onChange([...data, newData]);
                             resolve();
                         }, 1000)
                     }),
@@ -57,7 +69,8 @@ const GraduateAttributesTable = () => {
                             const dataDelete = [...data];
                             const index = oldData.tableData.id;
                             dataDelete.splice(index, 1);
-                            setData([...dataDelete]);
+                            // setData([...dataDelete]);
+                            // props.onChange([...data, newData])
                             resolve()
                         }, 1000)
                     }),

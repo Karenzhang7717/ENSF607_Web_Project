@@ -36,9 +36,7 @@ const OutcomesTable = (props) => {
     if (outcomeDescription == "" || outcomeDescription == undefined) {
       errorList.push("Please enter a learning outcome description");
     }
-
     return errorList;
-
   }
 
   const handleRowAdd = (newData, resolve) => {

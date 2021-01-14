@@ -6,19 +6,18 @@ import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
 import { useRef, useState, useEffect } from 'react';
-import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL } from '../constants/index'
+import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL } from '../constants/index'
 import axios from 'axios'
 
 function NewForm() {
 
-
   const [clearAll, setClear] = useState(false);
-  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], grades: "", gpa: "" })
+  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: "", gpa: "" })
 
   useEffect(() => {
     if (clearAll) {
       console.log("From parent, clear all!")
-      setState({ courseNum: "", learningOutcomes: [], grades: "", gpa: "" });
+      setState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: "", gpa: "" });
     }
   }, [clearAll])
 
@@ -40,11 +39,20 @@ function NewForm() {
     setState({ ...state, gpa: data });
   }
 
+  const onGraduateAttributeChange = (data) => {
+    setState({ ...state, graduateAttributes: data });
+  }
+
   const saveAll = () => {
     for (let i = 0; i < state.learningOutcomes.length; i++) {
       let thisData = state.learningOutcomes[i];
       thisData.courseNum = state.courseNum;
       axios.post(LEARNINGOUTCOME_URL, thisData);
+    }
+    for (let i = 0; i < state.graduateAttributes.length; i++) {
+      let thisData = state.graduateAttributes[i];
+      thisData.courseNum = state.courseNum;
+      axios.post(GRADUATEATTRIBUTES_URL, thisData);
     }
     alert("saved successfully");
   }
@@ -68,7 +76,7 @@ function NewForm() {
       <br></br>
       <p style={{ wordBreak: 'break-all', whiteSpace: "normal" }}>Graduate Attributes are generic characteristics specified by the CEAB (Canadian Engineering Accreditation Board), expected to be exhibited by graduates of Canadian engineering schools. This table summarizes how the Learning Outcomes relate to key Graduate Attributes addressed in this course.</p>
       <br></br>
-      <GraduateAttributesTable />
+      <GraduateAttributesTable data={state.graduateAttributes} courseNum={state.courseNum} newOutline={true} onChange={onGraduateAttributeChange} />
       <br></br>
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
