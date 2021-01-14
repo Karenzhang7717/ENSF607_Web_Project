@@ -23,12 +23,9 @@ function NewForm() {
 
   const onCourseNumberChange = (number) => {
     setState({ ...state, courseNum: number });
-    // console.log("Course Num from parent: " + state.courseNum)
   }
 
   const onLearningOutcomeChange = (data) => {
-    // console.log("NF: Learning outcome changed!");
-    // data.map(x => console.log(x));
     setState({ ...state, learningOutcomes: data });
   }
 
@@ -52,6 +49,7 @@ function NewForm() {
     for (let i = 0; i < state.graduateAttributes.length; i++) {
       let thisData = state.graduateAttributes[i];
       thisData.courseNum = state.courseNum;
+      console.log(thisData);
       axios.post(GRADUATEATTRIBUTES_URL, thisData);
     }
     alert("saved successfully");

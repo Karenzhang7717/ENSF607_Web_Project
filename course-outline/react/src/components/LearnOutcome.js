@@ -58,7 +58,7 @@ const OutcomesTable = (props) => {
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
       // setData([...dataUpdate]);
-      props.onChange(data)
+      props.onChange([...dataUpdate])
       resolve();
 
     } else {
@@ -71,8 +71,8 @@ const OutcomesTable = (props) => {
     const dataDelete = [...data];
     const index = oldData.tableData.id;
     dataDelete.splice(index, 1);
-    props.onChange(data)
-    resolve()
+    props.onChange([...dataDelete]);
+    resolve();
   }
 
   return (
@@ -96,7 +96,7 @@ const OutcomesTable = (props) => {
             setTimeout(() => {
               handleRowAdd(newData, resolve);
             }, 1000)
-          }).then(console.log("Hello")),
+          }),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -106,7 +106,7 @@ const OutcomesTable = (props) => {
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              handleRowDelete(oldData);
+              handleRowDelete(oldData, resolve);
             }, 1000)
           }),
       } : {}}
