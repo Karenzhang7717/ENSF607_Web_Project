@@ -60,6 +60,7 @@ function CourseInfoStatic(props) {
               <label style={{flex:'1'}}>Calendar Reference:</label>
               <a href={courseInfo.link} style={{flex:'4'}}>{courseInfo.link}</a>
             </div>
+            <br></br>
         </div>
   );
 }
