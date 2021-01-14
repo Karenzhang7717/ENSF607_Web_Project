@@ -79,9 +79,9 @@ function NewForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <Grade courseNum={state.courseNum} newGrade={true} onChange={onGradeChange} />
+      <Grade courseNum={state.courseNum} newGrade={true} newOutline={true} onChange={onGradeChange} />
       <Notes />
-      <GPA courseNum={state.courseNum} newGPA={true} onChange={onGPAChange} />
+      <GPA courseNum={state.courseNum} newGPA={true} newOutline={true} onChange={onGPAChange} />
       <div style={STYLE_BUTTONS}>
         <button className="button"
           onClick={(e) => setClear(true)}

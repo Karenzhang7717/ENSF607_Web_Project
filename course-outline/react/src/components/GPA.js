@@ -2,63 +2,82 @@ import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
 import { TableIcons } from "../constants/TableConstants";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import axios from 'axios';
 import { GPA_URL } from "../constants/index";
-import { getCourseNum } from "./CourseInfo";
+
 
 const GPATable = (props) => {
   const courseNum = props.courseNum;
-  console.log("courseNum " + courseNum);
-  const [data, setData] = useState([])
-  const [hasError, setErrors] = useState(false)
   const newOutline = props.newOutline;
+  const data = props.data;
+  const [existingData, setExistingData] = useState([]);
 
-  
-useEffect(() => {
-  async function fetchOutcomes() {
-    axios.get(GPA_URL)
-      .then(function (response) {
-        setData(response.data.filter(x => x.courseNum == courseNum));
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
-  if (!newOutline) {
-    fetchOutcomes();
-  }
-  if (data) {
-    console.log("data is being sent");
-    props.onChange(data);
-  }
-}, [data])
+  useEffect(() => {
+    async function fetchGPA() {
+      axios.get(GPA_URL)
+        .then(function (response) {
+          console.log(response.data);
+          setExistingData(response.data.filter(x => x.courseNum == courseNum));
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+    if (!newOutline) {
+      fetchGPA();
+    }
+  }, [])
 
+  const validateInput = (letterGrade, totalMark) => {
+    let errorList = []
     
-  
+    if (letterGrade == "" || totalMark == "") {
+      errorList.push("Please enter a valid input");
+    }
+
+    return errorList;
+
+  }
 
   const handleRowAdd = (newData, resolve) => {
-    setData([...data, newData]);
-    resolve();
+    let errorList = validateInput(newData.letterGrade, newData.totalMark);
+    if (errorList.length < 1) {
+      // setData([...data, newData]);
+      props.onChange([...data, newData])
+      resolve();
+    } else {
+      errorList.map(error => alert(error));
+      resolve();
+    }
+  }
+  console.log(data);
+
+  const handleRowUpdate = (newData, oldData, resolve) => {
+    let errorList = validateInput(newData.leterGrade, newData.totalMark);
+    if (errorList.length < 1) {
+      const dataUpdate = [...data];
+      const index = oldData.tableData.id;
+      dataUpdate[index] = newData;
+      // setData([...dataUpdate]);
+      props.onChange(data)
+      resolve();
+
+    } else {
+      errorList.map(error => alert(error));
+      resolve();
+    }
   }
 
-  // const handleChange = (e) => {
-  //   setCourseInfo({
-  //     ...GPATable,
-  //     [e.target.name]: e.target.value
-  //   })
-  //   console.log("Course Num from courseInfo: " + courseInfo.courseNum);
-  //   if (e.target.name == "courseNum") {
-  //     props.onCourseNumberChange(e.target.value);
-  //   }
-  // }
+  const handleRowDelete = (oldData, resolve) => {
+    const dataDelete = [...data];
+    const index = oldData.tableData.id;
+    dataDelete.splice(index, 1);
+    props.onChange(data)
+    resolve()
+  }
 
-  console.log(data);
+
+
   return (
     <MaterialTable
       style={{ padding: '0px' }}
@@ -74,36 +93,57 @@ useEffect(() => {
         ]}
       title="GPA Conversion"
       icons={TableIcons}
-      data={data}
-      editable={{
+      // data={data}
+      // editable={{
+      //   onRowAdd: newData =>
+      //     new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         handleRowAdd(newData, resolve)
+      //       }, 1000)
+      //     }),
+      //   onRowUpdate: (newData, oldData) =>
+      //     new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         const dataUpdate = [...data];
+      //         const index = oldData.tableData.id;
+      //         dataUpdate[index] = newData;
+      //         setData([...dataUpdate]);
+      //         console.log(data);
+      //         resolve();
+      //       }, 1000)
+      //     }),
+      //   onRowDelete: oldData =>
+      //     new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         const dataDelete = [...data];
+      //         const index = oldData.tableData.id;
+      //         dataDelete.splice(index, 1);
+      //         setData([...dataDelete]);
+      //         resolve()
+      //       }, 1000)
+      //     }),
+      data={newOutline ? data : existingData}
+      editable={newOutline ? {
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              handleRowAdd(newData, resolve)
+              handleRowAdd(newData, resolve);
             }, 1000)
-          }),
+          }).then(console.log("Hello")),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              const dataUpdate = [...data];
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-              setData([...dataUpdate]);
-              console.log(data);
-              resolve();
+              handleRowUpdate(newData, oldData, resolve);
             }, 1000)
           }),
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-              resolve()
+              handleRowDelete(oldData);
             }, 1000)
           }),
-      }}
+
+        } : {}}
     />
   )
 }
