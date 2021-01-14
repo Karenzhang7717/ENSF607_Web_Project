@@ -9,13 +9,54 @@ import {
   Link
 } from "react-router-dom";
 import axios from 'axios';
+import { GPA_URL } from "../constants/index";
+import { getCourseNum } from "./CourseInfo";
 
-
-const GPATable = () => {
+const GPATable = (props) => {
+  const courseNum = props.courseNum;
+  console.log("courseNum " + courseNum);
   const [data, setData] = useState([])
   const [hasError, setErrors] = useState(false)
+  const newOutline = props.newOutline;
 
-  const id = 2;
+  
+useEffect(() => {
+  async function fetchOutcomes() {
+    axios.get(GPA_URL)
+      .then(function (response) {
+        setData(response.data.filter(x => x.courseNum == courseNum));
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+  if (!newOutline) {
+    fetchOutcomes();
+  }
+  if (data) {
+    console.log("data is being sent");
+    props.onChange(data);
+  }
+}, [data])
+
+    
+  
+
+  const handleRowAdd = (newData, resolve) => {
+    setData([...data, newData]);
+    resolve();
+  }
+
+  // const handleChange = (e) => {
+  //   setCourseInfo({
+  //     ...GPATable,
+  //     [e.target.name]: e.target.value
+  //   })
+  //   console.log("Course Num from courseInfo: " + courseInfo.courseNum);
+  //   if (e.target.name == "courseNum") {
+  //     props.onCourseNumberChange(e.target.value);
+  //   }
+  // }
 
   console.log(data);
   return (
@@ -38,8 +79,7 @@ const GPATable = () => {
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              setData([...data, newData]);
-              resolve();
+              handleRowAdd(newData, resolve)
             }, 1000)
           }),
         onRowUpdate: (newData, oldData) =>
@@ -49,6 +89,7 @@ const GPATable = () => {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setData([...dataUpdate]);
+              console.log(data);
               resolve();
             }, 1000)
           }),

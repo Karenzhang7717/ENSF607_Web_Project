@@ -11,7 +11,7 @@ import axios from 'axios'
 
 function NewForm() {
 
-  const [state, setState] = useState({ courseNum: "", learningOutcomes: "" })
+  const [state, setState] = useState({ courseNum: "", learningOutcomes: "" ,grades:"",gpa:""})
 
   const onCourseNumberChange = (number) => {
     setState({ ...state, courseNum: number });
@@ -21,6 +21,14 @@ function NewForm() {
   const onLearningOutcomeChange = (data) => {
     setState({ ...state, learningOutcomes: data });
   }
+
+  const onGradeChange = (data) => {
+    setState({ ...state, grades: data });
+  }
+  const onGPAChange = (data) => {
+    setState({ ...state, gpa: data });
+  }
+
 
   const saveAll = () => {
     for (let i = 0; i < state.learningOutcomes.length; i++) {
@@ -52,9 +60,9 @@ function NewForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <Grade />
+     <Grade courseNum={state.courseNum} newGrade={true} onChange={onGradeChange} />
       <Notes />
-      <GPA />
+      <GPA courseNum={state.courseNum} newGPA={true} onChange={onGPAChange} />
       <div style={STYLE_BUTTONS}>
         {/* <button className="button"
           onClick={(e) => clearFields(courseInfo)}

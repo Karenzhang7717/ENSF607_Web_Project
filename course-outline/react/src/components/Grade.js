@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState, useReducer } from "react";
-import { TableIcons } from "../constants/TableConstants";
+import {TableIcons} from "../constants/TableConstants";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,31 +9,60 @@ import {
   Link
 } from "react-router-dom";
 import axios from 'axios';
+import {COURSEGRADE_URL } from "../constants/index";
 
 
-const GradesTable = () => {
-  const [data, setData] = useState([
-    { component: 'Assignments', outcome: '1-7', weight: 25 },
-    { component: 'Project', outcome: '1-7', weight: 10 },
-    { component: 'Total', outcome: '', weight: 35}
-  ])
-  const [hasError, setErrors] = useState(false)
 
+  const GradesTable = (props) => {
+    const courseNum = props.courseNum;
+    const newOutline = props.newOutline;
+
+    console.log("courseNum " + courseNum);
+    const [data, setData] = useState([
+      { component: 'Assignments', outcome: '1-7', weight: 25 },
+      { component: 'Project', outcome: '1-7', weight: 10 },
+      { component: 'Total', outcome: '', weight: 35}
+    ])
+    const [hasError, setErrors] = useState(false)
+    useEffect(() => {
+      async function fetchGrades() {
+        axios.get(COURSEGRADE_URL)
+          .then(function (response) {
+            setData(response.data.filter(x => x.courseNum == courseNum));
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+      if (!newOutline) {
+        fetchGrades();
+      }
+      if (data) {
+        console.log("data is being sent");
+        props.onChange(data);
+      }
+    }, [data])
+
+  console.log(data);
   return (
-
-      <
+    
+    <
         MaterialTable
         title="Final Grade Determination"
-        columns={[
-          { title: 'Component', field: 'component' },
-          { title: 'Learning Outcomes', field: 'outcome' },
-          { title: 'Weight%', field: 'weight', type: 'numeric' },
+          columns={
+        [
+    { title: 'Component', field: 'courseComponent' },
+    { title: 'Learning Outcomes', field: 'courseOutcomes' },
+    { title: 'Weight%', field: 'courseWeight' }
+         
         ]}
         data={data}
         icons={TableIcons}
         options={
           { search: false, paging: false }
         }
+
+
         editable={{
           isEditHidden: rowData => rowData.component === 'Total',
           isDeleteHidden: rowData => rowData.component === 'Total',
@@ -74,11 +103,14 @@ const GradesTable = () => {
                 setData([...dataDelete]);
                 resolve()
               }, 1000)
+
             }),
+
+
         }}
+
       />
   )
 }
-
 
 export default GradesTable;
