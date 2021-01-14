@@ -2,12 +2,6 @@ import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useState } from "react";
 import { TableIcons } from "../constants/TableConstants";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import axios from 'axios';
 import { LEARNINGOUTCOME_URL } from "../constants/index";
 
@@ -17,7 +11,8 @@ const OutcomesTable = (props) => {
   console.log("courseNum " + courseNum);
   const [data, setData] = useState([]);
   const [existingData, setExistingData] = useState([]);
-  const [hasError, setErrors] = useState(false);
+  // const [hasError, setErrors] = useState(false);
+  // const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
     async function fetchOutcomes() {
@@ -40,19 +35,48 @@ const OutcomesTable = (props) => {
     }
   }, [data])
 
+  const validateInput = (learningOutcomeNum, outcomeDescription) => {
+    let errorList = []
+    if (!Number.isInteger(parseInt(learningOutcomeNum))) {
+      console.log("outcome number is not a number!");
+      errorList.push("Learning outcome number must be an integer!");
+    }
+
+    if (outcomeDescription == "" || outcomeDescription == undefined) {
+      console.log("Description is empty");
+      errorList.push("Please enter a learning outcome description");
+    }
+
+    return errorList;
+
+  }
+
   const handleRowAdd = (newData, resolve) => {
     console.log("onRowAdd newData: " + newData[0]);
-    setData([...data, newData]);
-    resolve();
+    let errorList = validateInput(newData.learningOutcomeNum, newData.outcomeDescription);
+    if (errorList.length < 1) {
+      setData([...data, newData]);
+      resolve();
+    } else {
+      errorList.map(error => alert(error));
+      resolve();
+    }
   }
 
   const handleRowUpdate = (newData, oldData, resolve) => {
     console.log("onRowUpdate");
-    const dataUpdate = [...data];
-    const index = oldData.tableData.id;
-    dataUpdate[index] = newData;
-    setData([...dataUpdate]);
-    resolve();
+    let errorList = validateInput(newData.learningOutcomeNum, newData.outcomeDescription);
+    if (errorList.length < 1) {
+      const dataUpdate = [...data];
+      const index = oldData.tableData.id;
+      dataUpdate[index] = newData;
+      setData([...dataUpdate]);
+      resolve();
+
+    } else {
+      errorList.map(error => alert(error));
+      resolve();
+    }
   }
 
   const handleRowDelete = (oldData, resolve) => {
@@ -63,23 +87,6 @@ const OutcomesTable = (props) => {
     setData([...dataDelete]);
     resolve()
   }
-
-  // const addCourseNum = () => {
-  //   for (let i = 0; i < data.length; i++) {
-  //     data[i].courseNum = courseNum;
-  //     console.log(data[i]);
-  //   }
-  // }
-  // addCourseNum();
-
-  // props.onChange(data);
-
-
-
-  // console.log(data);
-  // console.log("course number from courseinfos: " + getCourseNum())
-
-  console.log(existingData);
 
   return (
     <MaterialTable
@@ -117,6 +124,7 @@ const OutcomesTable = (props) => {
           }),
       } : {}}
     />
+
   )
 }
 
