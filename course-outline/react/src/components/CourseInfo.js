@@ -28,6 +28,9 @@ function CourseInfo(props) {
       ...courseInfo,
       [e.target.name]: e.target.value
     })
+    if (e.target.name == "courseNum") {
+      props.onCourseNumberChange(e.target.value);
+    }
   }
 
   const sendCourseInfo = (data) => {

@@ -38,10 +38,9 @@ const OutcomesTable = (props) => {
 
   useEffect(() => {
     async function fetchOutcomes() {
-      // axios.defaults.xsrfCookieName = 'csrftoken';
-      // axios.defaults.xsrfHeaderName = 'X-CSRFToken';
       axios.get(LEARNINGOUTCOME_URL)
         .then(function (response) {
+          console.log(response);
           setData(response.data.filter(x => x.courseNum == courseNum));
         })
         .catch(function (error) {
@@ -52,14 +51,34 @@ const OutcomesTable = (props) => {
   }, [])
 
   const handleRowAdd = (newData, resolve) => {
+    console.log("onRowAdd");
     setData([...data, newData]);
+    // let dataWithCourse = data.map(x => x[courseNum] = courseNum);
+    let dataWithCourse = data;
+    console.log(data);
     resolve();
+  }
+
+  const handleRowUpdate = (newData, oldData, resolve) => {
+    console.log("onRowUpdate");
+    const dataUpdate = [...data];
+    const index = oldData.tableData.id;
+    dataUpdate[index] = newData;
+    setData([...dataUpdate]);
+    resolve();
+  }
+
+  const handleRowDelete = (oldData, resolve) => {
+    console.log("onRowDelete");
+    const dataDelete = [...data];
+    const index = oldData.tableData.id;
+    dataDelete.splice(index, 1);
+    setData([...dataDelete]);
+    resolve()
   }
 
   console.log(data);
   // console.log("course number from courseinfos: " + getCourseNum())
-
-
 
 
   return (
@@ -80,28 +99,19 @@ const OutcomesTable = (props) => {
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              handleRowAdd(newData, resolve)
+              handleRowAdd(newData, resolve);
             }, 1000)
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              const dataUpdate = [...data];
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-              setData([...dataUpdate]);
-              console.log(data);
-              resolve();
+              handleRowUpdate(newData, oldData, resolve);
             }, 1000)
           }),
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-              resolve()
+              handleRowDelete(oldData);
             }, 1000)
           }),
       }}
