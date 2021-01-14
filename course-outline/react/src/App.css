@@ -7,6 +7,15 @@ h2 {
   background-color: black;
 }
 
+.outline-list {
+  font-size: 18px !important;
+  padding-left: 20px;
+}
+
+.icon {
+  padding-top: 8px;
+}
+
 nav {
   position: fixed;
   top: 0;
