@@ -6,32 +6,46 @@ import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
 import { useRef, useState, useEffect } from 'react';
-import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL,GPA_URL,COURSEGRADE_URL } from '../constants/index'
+import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL, GPA_URL, COURSEGRADE_URL } from '../constants/index'
 import axios from 'axios'
 
 function NewForm() {
 
+
+  const defaults = {
+    courseInfo: {
+      courseNum: "",
+      courseName: "",
+      courseDesc: "",
+      courseHour: "",
+      credit: "",
+      link: ""
+    },
+    learningOutcomes: [],
+    grades: [
+      { courseComponent: 'Assignments', courseOutcomes: '1-7', courseWeight: 25 },
+      { courseComponent: 'Project', courseOutcomes: '1-7', courseWeight: 10 },
+      { courseComponent: 'Total', courseOutcomes: '', courseWeight: 35 }],
+    gpa: []
+  }
+
+
   const [clearAll, setClear] = useState(false);
-  const [state, setState] = useState({ courseInfo: {    
-    courseNum: "",
-    courseName: "",
-    courseDesc: "",
-    courseHour: "",
-    credit: "",
-    link: ""
-  }, learningOutcomes: [], grades: [], gpa: [] })
+  const [state, setState] = useState(defaults);
 
   useEffect(() => {
     if (clearAll) {
       console.log("From parent, clear all!")
-      setState({ courseInfo: {    
-    courseNum: "",
-    courseName: "",
-    courseDesc: "",
-    courseHour: "",
-    credit: "",
-    link: ""
-  }, learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] });
+      setState({
+        courseInfo: {
+          courseNum: "",
+          courseName: "",
+          courseDesc: "",
+          courseHour: "",
+          credit: "",
+          link: ""
+        }, learningOutcomes: [], graduateAttributes: [], grades: [], gpa: []
+      });
     }
   }, [clearAll])
 
@@ -105,7 +119,7 @@ function NewForm() {
 
     <div className="new-form">
       <h1>1. Course Information</h1>
-      <CourseInfo data={state.courseInfo} onChange={onCourseInfoChange}/>
+      <CourseInfo data={state.courseInfo} onChange={onCourseInfoChange} />
       <h1>2. Learning Outcomes</h1>
       <p>At the end of this course, you will be able to:</p>
       <LearnOutcome data={state.learningOutcomes} courseNum={state.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />

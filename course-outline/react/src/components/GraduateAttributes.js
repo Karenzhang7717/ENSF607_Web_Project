@@ -99,54 +99,23 @@ const GraduateAttributesTable = (props) => {
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
                             handleRowAdd(newData, resolve);
-                            // props.onChange([...data, newData])
-                            // resolve();
                         }, 1000)
                     }),
                 onRowUpdate: (newData, oldData) =>
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
                             handleRowUpdate(newData, oldData, resolve);
-                            // const dataUpdate = [...data];
-                            // const index = oldData.tableData.id;
-                            // dataUpdate[index] = newData;
-                            // // setData([...dataUpdate]);
-                            // // props.onChange([...data, newData]);
-                            // resolve();
                         }, 1000)
                     }),
                 onRowDelete: oldData =>
                     new Promise((resolve, reject) => {
                         setTimeout(() => {
                             handleRowDelete(oldData, resolve);
-                            // const dataDelete = [...data];
-                            // const index = oldData.tableData.id;
-                            // dataDelete.splice(index, 1);
-                            // // setData([...dataDelete]);
-                            // // props.onChange([...data, newData])
-                            // resolve()
                         }, 1000)
                     }),
             } : {}}
         />
     )
 }
-
-
 export default GraduateAttributesTable;
 
-// function LearnOutcome() {
-//   const [outcomes, setOutcomes] = useState("Please enter a learning outcome!");
-//   return (
-//     <div className="container" style={{ paddingLeft: "5px", margin: "0px" }}>
-//       <h1>2. Learning Outcomes</h1>
-//       <div className='outcomes_table' style={{ paddingLeft: "0px", margin: "0px" }}>
-//         <p>At the end of this course, you will be able to: </p>
-//         <OutcomesTable />
-//         <br></br>
-//       </div>
-//     </div >
-//   );
-// }
-
-// export default LearnOutcome;

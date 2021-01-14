@@ -42,7 +42,6 @@ const OutcomesTable = (props) => {
   const handleRowAdd = (newData, resolve) => {
     let errorList = validateInput(newData.learningOutcomeNum, newData.outcomeDescription);
     if (errorList.length < 1) {
-      // setData([...data, newData]);
       props.onChange([...data, newData])
       resolve();
     } else {
@@ -57,7 +56,6 @@ const OutcomesTable = (props) => {
       const dataUpdate = [...data];
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
-      // setData([...dataUpdate]);
       props.onChange([...dataUpdate])
       resolve();
 
