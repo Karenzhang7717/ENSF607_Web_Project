@@ -5,13 +5,22 @@ import GPA from './GPA';
 import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL } from '../constants/index'
 import axios from 'axios'
 
 function NewForm() {
 
-  const [state, setState] = useState({ courseNum: "", learningOutcomes: "" ,grades:"",gpa:""})
+
+  const [clearAll, setClear] = useState(false);
+  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], grades: "", gpa: "" })
+
+  useEffect(() => {
+    if (clearAll) {
+      console.log("From parent, clear all!")
+      setState({ courseNum: "", learningOutcomes: [], grades: "", gpa: "" });
+    }
+  }, [clearAll])
 
   const onCourseNumberChange = (number) => {
     setState({ ...state, courseNum: number });
@@ -19,6 +28,8 @@ function NewForm() {
   }
 
   const onLearningOutcomeChange = (data) => {
+    // console.log("NF: Learning outcome changed!");
+    // data.map(x => console.log(x));
     setState({ ...state, learningOutcomes: data });
   }
 
@@ -29,7 +40,6 @@ function NewForm() {
     setState({ ...state, gpa: data });
   }
 
-
   const saveAll = () => {
     for (let i = 0; i < state.learningOutcomes.length; i++) {
       let thisData = state.learningOutcomes[i];
@@ -39,10 +49,13 @@ function NewForm() {
     alert("saved successfully");
   }
 
-  console.log("Learning Outcome state from parent: ");
-  for (let i = 0; i < state.learningOutcomes.length; i++) {
-    console.log(state.learningOutcomes[i]);
-  }
+  // console.log("Learning Outcome state from parent: ");
+  // for (let i = 0; i < state.learningOutcomes.length; i++) {
+  //   console.log(state.learningOutcomes[i]);
+  // }
+
+  // console.log("re-rendering parent with data: ");
+  // state.learningOutcomes.map(x => console.log(x));
 
   return (
 
@@ -51,7 +64,7 @@ function NewForm() {
       <CourseInfo onCourseNumberChange={onCourseNumberChange} />
       <h1>2. Learning Outcomes</h1>
       <p>At the end of this course, you will be able to:</p>
-      <LearnOutcome courseNum={state.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />
+      <LearnOutcome data={state.learningOutcomes} courseNum={state.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />
       <br></br>
       <p style={{ wordBreak: 'break-all', whiteSpace: "normal" }}>Graduate Attributes are generic characteristics specified by the CEAB (Canadian Engineering Accreditation Board), expected to be exhibited by graduates of Canadian engineering schools. This table summarizes how the Learning Outcomes relate to key Graduate Attributes addressed in this course.</p>
       <br></br>
@@ -60,13 +73,13 @@ function NewForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-     <Grade courseNum={state.courseNum} newGrade={true} onChange={onGradeChange} />
+      <Grade courseNum={state.courseNum} newGrade={true} onChange={onGradeChange} />
       <Notes />
       <GPA courseNum={state.courseNum} newGPA={true} onChange={onGPAChange} />
       <div style={STYLE_BUTTONS}>
-        {/* <button className="button"
-          onClick={(e) => clearFields(courseInfo)}
-        >Clear All</button> */}
+        <button className="button"
+          onClick={(e) => setClear(true)}
+        >Clear All</button>
         <button className="button"
           onClick={(e) => saveAll()}
         >Save</button>
