@@ -16,9 +16,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('courseNum', models.CharField(max_length=10)),
-                ('courseComponent', models.CharField(max_length=50)),
-                ('courseOutcomes', models.CharField(max_length=50)),
-                ('courseWeight', models.CharField(max_length=10)),
+                ('courseComponent', models.CharField(max_length=50,blank=True)),
+                ('courseOutcomes', models.CharField(max_length=50,blank=True)),
+                ('courseWeight', models.IntegerField()),
             ],
         ),
     ]

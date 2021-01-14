@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('courseNum', models.CharField(max_length=10)),
                 ('letterGrade', models.CharField(max_length=10)),
-                ('totalMark', models.CharField(max_length=10)),
+                ('totalMark', models.IntegerField()),
             ],
         ),
     ]

@@ -29,9 +29,9 @@ function SavedForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <GradeStatic />
+      <GradeStatic courseNum={courseNum}/>
       <Notes />
-      <GPAStatic />
+      <GPAStatic courseNum={courseNum}/>
       <br></br>
     </div>
 
