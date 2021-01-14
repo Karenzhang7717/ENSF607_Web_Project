@@ -16,6 +16,10 @@ h2 {
   padding-top: 8px;
 }
 
+.not-implemented {
+  color: grey;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -46,7 +50,7 @@ h1 {
   margin-bottom: 8px !important;
 }
 
-.guidelines li::before {
+/* .guidelines li::before {
   content: "\2022 " !important;
   color: #000000 !important;
   white-space: "pre" !important;
@@ -55,4 +59,4 @@ h1 {
 .guidelines li::after {
   content: "\A" !important;
   white-space: "pre" !important;
-}
+} */
