@@ -14,43 +14,47 @@ function CourseInfo(props) {
     flexDirection: 'column',
   };
 
-  const [courseInfo, setCourseInfo] = useState({
-    courseNum: "",
-    courseName: "",
-    courseDesc: "",
-    courseHour: "",
-    credit: "",
-    link: ""
-  })
+  const data = props.data;
+
+  // const [courseInfo, setCourseInfo] = useState({
+  //   courseNum: "",
+  //   courseName: "",
+  //   courseDesc: "",
+  //   courseHour: "",
+  //   credit: "",
+  //   link: ""
+  // })
 
   const handleChange = (e) => {
-    setCourseInfo({
-      ...courseInfo,
-      [e.target.name]: e.target.value
-    })
-    if (e.target.name == "courseNum") {
-      props.onCourseNumberChange(e.target.value);
-    }
+    // setCourseInfo({
+    //   ...courseInfo,
+    //   [e.target.name]: e.target.value
+    // })
+    // if (e.target.name == "courseNum") {
+    //   props.onCourseNumberChange(e.target.value);
+    // }
+    console.log(e);
+    props.onChange(e);
   }
 
-  const sendCourseInfo = (data) => {
-    axios.post(COURSEINFO_URL, data)
-      .then(alert('Saved Successfully!'))
-      .catch(err => alert(err));
-    props.onCourseNumberChange(courseInfo.courseNum);
-  }
+  // const sendCourseInfo = (data) => {
+  //   axios.post(COURSEINFO_URL, data)
+  //     .then(alert('Saved Successfully!'))
+  //     .catch(err => alert(err));
+  //   props.onCourseNumberChange(courseInfo.courseNum);
+  // }
 
-  const clearFields = (data) => {
-    setCourseInfo({
-      ...courseInfo,
-      courseNum: "",
-      courseName: "",
-      courseDesc: "",
-      courseHour: "",
-      credit: "",
-      link: ""
-    })
-  }
+  // const clearFields = (data) => {
+  //   setCourseInfo({
+  //     ...courseInfo,
+  //     courseNum: "",
+  //     courseName: "",
+  //     courseDesc: "",
+  //     courseHour: "",
+  //     credit: "",
+  //     link: ""
+  //   })
+  // }
 
   // const displayCourseHour = (e) => {
   //   setCourseHour(e.target.value);
@@ -83,14 +87,14 @@ function CourseInfo(props) {
           type="text"
           name='courseNum'
           placeholder="Enter course number"
-          value={courseInfo.courseNum}
+          value={data.courseNum}
           onChange={handleChange}
         />
         <input className="input"
           type="text"
           name='courseName'
           placeholder="Enter course name"
-          value={courseInfo.courseName}
+          value={data.courseName}
           onChange={handleChange}
         />
         <textarea className="input"
@@ -98,7 +102,7 @@ function CourseInfo(props) {
           type="text"
           name='courseDesc'
           placeholder="Enter course information"
-          value={courseInfo.courseDesc}
+          value={data.courseDesc}
           onChange={handleChange}
         />
         <div style={{ display: 'flex' }}>
@@ -108,7 +112,7 @@ function CourseInfo(props) {
             type="text"
             name="courseHour"
             placeholder="Enter course hours"
-            value={courseInfo.courseHour}
+            value={data.courseHour}
             onChange={handleChange}
           // onChange={(e) => displayCourseHour(e)}
           />
@@ -120,7 +124,7 @@ function CourseInfo(props) {
             type="text"
             name="credit"
             placeholder="Enter course credit"
-            value={courseInfo.credit}
+            value={data.credit}
             onChange={handleChange}
           // onChange={(e) => displayCourseCredit(e)}
           />
@@ -132,7 +136,7 @@ function CourseInfo(props) {
             type="text"
             name="link"
             placeholder="Enter calendar url"
-            value={courseInfo.link}
+            value={data.link}
             onChange={handleChange}
           // onChange={(e) => displayCalendarUrl(e)}
           />
@@ -162,14 +166,14 @@ function CourseInfo(props) {
             </div>
             )}
         </div> */}
-      <div style={STYLE_BUTTONS}>
+      {/* <div style={STYLE_BUTTONS}>
         <button className="button"
           onClick={(e) => clearFields(courseInfo)}
         >Clear All</button>
         <button className="button"
           onClick={(e) => sendCourseInfo(courseInfo)}
         >Save</button>
-      </div>
+      </div> */}
 
     </div>
   );

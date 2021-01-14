@@ -12,17 +12,37 @@ import axios from 'axios'
 function NewForm() {
 
   const [clearAll, setClear] = useState(false);
-  const [state, setState] = useState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] })
+  const [state, setState] = useState({ courseInfo: {    
+    courseNum: "",
+    courseName: "",
+    courseDesc: "",
+    courseHour: "",
+    credit: "",
+    link: ""
+  }, learningOutcomes: [], grades: [], gpa: [] })
 
   useEffect(() => {
     if (clearAll) {
       console.log("From parent, clear all!")
-      setState({ courseNum: "", learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] });
+      setState({ courseInfo: {    
+    courseNum: "",
+    courseName: "",
+    courseDesc: "",
+    courseHour: "",
+    credit: "",
+    link: ""
+  }, learningOutcomes: [], graduateAttributes: [], grades: [], gpa: [] });
     }
   }, [clearAll])
 
-  const onCourseNumberChange = (number) => {
-    setState({ ...state, courseNum: number });
+  const onCourseInfoChange = (e) => {
+    console.log(e);
+    setState({
+      ...state,
+      courseInfo: {
+        ...state.courseInfo, [e.target.name]: e.target.value
+      }
+    })
   }
 
   const onLearningOutcomeChange = (data) => {
@@ -41,6 +61,10 @@ function NewForm() {
   }
 
   const saveAll = () => {
+    console.log(state.courseInfo)
+    axios.post(COURSEINFO_URL, state.courseInfo)
+      .then(alert('Saved Successfully!'))
+      .catch(err => alert(err));
     for (let i = 0; i < state.learningOutcomes.length; i++) {
       let thisData = state.learningOutcomes[i];
       thisData.courseNum = state.courseNum;
@@ -81,7 +105,7 @@ function NewForm() {
 
     <div className="new-form">
       <h1>1. Course Information</h1>
-      <CourseInfo onCourseNumberChange={onCourseNumberChange} />
+      <CourseInfo data={state.courseInfo} onChange={onCourseInfoChange}/>
       <h1>2. Learning Outcomes</h1>
       <p>At the end of this course, you will be able to:</p>
       <LearnOutcome data={state.learningOutcomes} courseNum={state.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />
