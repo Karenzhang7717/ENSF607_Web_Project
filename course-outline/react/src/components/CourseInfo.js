@@ -33,7 +33,7 @@ function CourseInfo(props) {
     // if (e.target.name == "courseNum") {
     //   props.onCourseNumberChange(e.target.value);
     // }
-    console.log(e);
+    // console.log(e);
     props.onChange(e);
   }
 

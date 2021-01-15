@@ -29,7 +29,7 @@ const GPATable = (props) => {
 
   const validateInput = (letterGrade, totalMark) => {
     let errorList = []
-    
+
     if (letterGrade == "" || totalMark == "") {
       errorList.push("Please enter a valid input");
     }
@@ -49,7 +49,6 @@ const GPATable = (props) => {
       resolve();
     }
   }
-  console.log(data);
 
   const handleRowUpdate = (newData, oldData, resolve) => {
     let errorList = validateInput(newData.leterGrade, newData.totalMark);
@@ -82,10 +81,10 @@ const GPATable = (props) => {
       }
       columns={
         [
-          
-    { title: 'Letter Grade', field: 'letterGrade' },
-    { title: 'Total Mark', field: 'totalMark' }
-         
+
+          { title: 'Letter Grade', field: 'letterGrade' },
+          { title: 'Total Mark', field: 'totalMark' }
+
         ]}
       title="GPA Conversion"
       icons={TableIcons}
@@ -139,7 +138,7 @@ const GPATable = (props) => {
             }, 1000)
           }),
 
-        } : {}}
+      } : {}}
     />
   )
 }

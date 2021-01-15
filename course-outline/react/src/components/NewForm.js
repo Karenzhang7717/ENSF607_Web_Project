@@ -7,7 +7,7 @@ import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
 import { useState, useEffect } from 'react';
 import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL, GPA_URL, COURSEGRADE_URL } from '../constants/index'
-import axios from 'axios'
+import axios from 'axios';
 
 function NewForm() {
 
@@ -39,7 +39,6 @@ function NewForm() {
   }, [clearAll])
 
   const onCourseInfoChange = (e) => {
-    console.log(e);
     setState({
       ...state,
       courseInfo: {
@@ -68,9 +67,20 @@ function NewForm() {
     if (courseNum === "" || courseNum === undefined) {
       alert("Course number is required before posting!");
     } else {
-      var isReqDone = false;
-      axios.post(COURSEINFO_URL, state.courseInfo)
-        .then(x => isReqDone = true);
+      var courseUrl = state.courseInfo.link;
+      try {
+        var newUrl = new URL(courseUrl);
+      } catch (TypeError) {
+        alert("Invalid URL!");
+        return;
+      }
+
+      if (state.courseInfo.credit.length > 1) {
+        alert("Course credit may only be a single character!")
+        return;
+      }
+
+      axios.post(COURSEINFO_URL, state.courseInfo);
       for (let i = 0; i < state.learningOutcomes.length; i++) {
         let thisData = state.learningOutcomes[i];
         thisData.courseNum = courseNum;
@@ -94,12 +104,8 @@ function NewForm() {
         console.log(thisData);
         axios.post(COURSEGRADE_URL, thisData);
       }
+      alert("Saved successfully");
 
-      if (isReqDone) {
-        alert("Saved successfully");
-      } else {
-        alert("Invalid URL!");
-      }
     }
   }
 
