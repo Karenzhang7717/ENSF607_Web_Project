@@ -75,36 +75,36 @@ function NewForm() {
   }
 
   const saveAll = () => {
+    var courseNum = state.courseInfo.courseNum;
     console.log(state.courseInfo)
     axios.post(COURSEINFO_URL, state.courseInfo)
-      .then(alert('Saved Successfully!'))
       .catch(err => alert(err));
     for (let i = 0; i < state.learningOutcomes.length; i++) {
       let thisData = state.learningOutcomes[i];
-      thisData.courseNum = state.courseNum;
+      thisData.courseNum = courseNum;
       axios.post(LEARNINGOUTCOME_URL, thisData);
     }
     for (let i = 0; i < state.graduateAttributes.length; i++) {
       let thisData = state.graduateAttributes[i];
-      thisData.courseNum = state.courseNum;
+      thisData.courseNum = courseNum;
       console.log(thisData);
       axios.post(GRADUATEATTRIBUTES_URL, thisData);
     }
     for (let i = 0; i < state.gpa.length; i++) {
       let thisData = state.gpa[i];
-      thisData.courseNum = state.courseNum;
+      thisData.courseNum = courseNum;
       console.log(thisData);
       axios.post(GPA_URL, thisData);
     }
     for (let i = 0; i < state.grades.length; i++) {
       let thisData = state.grades[i];
-      thisData.courseNum = state.courseNum;
+      thisData.courseNum = courseNum;
       console.log(thisData);
       axios.post(COURSEGRADE_URL, thisData);
     }
 
 
-    alert("saved successfully");
+    alert("Saved successfully");
   }
 
   // console.log("Learning Outcome state from parent: ");
@@ -122,18 +122,18 @@ function NewForm() {
       <CourseInfo data={state.courseInfo} onChange={onCourseInfoChange} />
       <h1>2. Learning Outcomes</h1>
       <p>At the end of this course, you will be able to:</p>
-      <LearnOutcome data={state.learningOutcomes} courseNum={state.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />
+      <LearnOutcome data={state.learningOutcomes} courseNum={state.courseInfo.courseNum} newOutline={true} onChange={onLearningOutcomeChange} />
       <br></br>
       <p style={{ wordBreak: 'break-all', whiteSpace: "normal" }}>Graduate Attributes are generic characteristics specified by the CEAB (Canadian Engineering Accreditation Board), expected to be exhibited by graduates of Canadian engineering schools. This table summarizes how the Learning Outcomes relate to key Graduate Attributes addressed in this course.</p>
       <br></br>
-      <GraduateAttributesTable data={state.graduateAttributes} courseNum={state.courseNum} newOutline={true} onChange={onGraduateAttributeChange} />
+      <GraduateAttributesTable data={state.graduateAttributes} courseNum={state.courseInfo.courseNum} newOutline={true} onChange={onGraduateAttributeChange} />
       <br></br>
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <Grade data={state.grades} courseNum={state.courseNum} newOutline={true} onChange={onGradeChange} />
+      <Grade data={state.grades} courseNum={state.courseInfo.courseNum} newOutline={true} onChange={onGradeChange} />
       <Notes />
-      <GPA data={state.gpa} courseNum={state.courseNum} newOutline={true} onChange={onGPAChange} />
+      <GPA data={state.gpa} courseNum={state.courseInfo.courseNum} newOutline={true} onChange={onGPAChange} />
       <div style={STYLE_BUTTONS}>
         <button className="button"
           onClick={(e) => setClear(true)}

@@ -7,6 +7,7 @@ import { LEARNINGOUTCOME_URL } from "../constants/index";
 
 const OutcomesTable = (props) => {
   const courseNum = props.courseNum;
+  console.log("From LO: " + courseNum);
   const newOutline = props.newOutline;
   const data = props.data;
   const [existingData, setExistingData] = useState([]);
