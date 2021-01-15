@@ -1,7 +1,7 @@
 import CourseInfoStatic from './CourseInfoStatic';
 import LearnOutcome from './LearnOutcome';
-import GradeStatic from './GradeStatic';
-import GPAStatic from './GPAStatic';
+import Grade from './Grade';
+import GPA from './GPA';
 import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
@@ -29,9 +29,9 @@ function SavedForm() {
       <CEABGuidelines />
       <h1>3. Final Grade Determination</h1>
       <p>The final grade in this course will be based on the following components:</p>
-      <GradeStatic courseNum={courseNum} />
+      <Grade courseNum={courseNum} newOutline={false}/>
       <Notes />
-      <GPAStatic courseNum={courseNum} />
+      <GPA courseNum={courseNum} newOutline={false}/>
       <br></br>
     </div>
 
