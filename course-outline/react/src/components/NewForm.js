@@ -36,16 +36,7 @@ function NewForm() {
   useEffect(() => {
     if (clearAll) {
       console.log("From parent, clear all!")
-      setState({
-        courseInfo: {
-          courseNum: "",
-          courseName: "",
-          courseDesc: "",
-          courseHour: "",
-          credit: "",
-          link: ""
-        }, learningOutcomes: [], graduateAttributes: [], grades: [], gpa: []
-      });
+      setState({ ...defaults, grades: [] });
     }
   }, [clearAll])
 
