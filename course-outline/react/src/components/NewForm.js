@@ -76,9 +76,9 @@ function NewForm() {
 
   const saveAll = () => {
     var courseNum = state.courseInfo.courseNum;
-    console.log(state.courseInfo)
+    var isReqDone = false;
     axios.post(COURSEINFO_URL, state.courseInfo)
-      .catch(err => alert(err));
+      .then(x => isReqDone = true);
     for (let i = 0; i < state.learningOutcomes.length; i++) {
       let thisData = state.learningOutcomes[i];
       thisData.courseNum = courseNum;
@@ -103,8 +103,11 @@ function NewForm() {
       axios.post(COURSEGRADE_URL, thisData);
     }
 
-
-    alert("Saved successfully");
+    if (isReqDone) {
+      alert("Saved successfully");
+    } else {
+      alert("Invalid URL!");
+    }
   }
 
   // console.log("Learning Outcome state from parent: ");
