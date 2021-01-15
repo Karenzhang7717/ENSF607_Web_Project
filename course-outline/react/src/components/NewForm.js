@@ -76,37 +76,41 @@ function NewForm() {
 
   const saveAll = () => {
     var courseNum = state.courseInfo.courseNum;
-    var isReqDone = false;
-    axios.post(COURSEINFO_URL, state.courseInfo)
-      .then(x => isReqDone = true);
-    for (let i = 0; i < state.learningOutcomes.length; i++) {
-      let thisData = state.learningOutcomes[i];
-      thisData.courseNum = courseNum;
-      axios.post(LEARNINGOUTCOME_URL, thisData);
-    }
-    for (let i = 0; i < state.graduateAttributes.length; i++) {
-      let thisData = state.graduateAttributes[i];
-      thisData.courseNum = courseNum;
-      console.log(thisData);
-      axios.post(GRADUATEATTRIBUTES_URL, thisData);
-    }
-    for (let i = 0; i < state.gpa.length; i++) {
-      let thisData = state.gpa[i];
-      thisData.courseNum = courseNum;
-      console.log(thisData);
-      axios.post(GPA_URL, thisData);
-    }
-    for (let i = 0; i < state.grades.length; i++) {
-      let thisData = state.grades[i];
-      thisData.courseNum = courseNum;
-      console.log(thisData);
-      axios.post(COURSEGRADE_URL, thisData);
-    }
-
-    if (isReqDone) {
-      alert("Saved successfully");
+    if (courseNum === "" || courseNum === undefined) {
+      alert("Course number is required before posting!");
     } else {
-      alert("Invalid URL!");
+      var isReqDone = false;
+      axios.post(COURSEINFO_URL, state.courseInfo)
+        .then(x => isReqDone = true);
+      for (let i = 0; i < state.learningOutcomes.length; i++) {
+        let thisData = state.learningOutcomes[i];
+        thisData.courseNum = courseNum;
+        axios.post(LEARNINGOUTCOME_URL, thisData);
+      }
+      for (let i = 0; i < state.graduateAttributes.length; i++) {
+        let thisData = state.graduateAttributes[i];
+        thisData.courseNum = courseNum;
+        console.log(thisData);
+        axios.post(GRADUATEATTRIBUTES_URL, thisData);
+      }
+      for (let i = 0; i < state.gpa.length; i++) {
+        let thisData = state.gpa[i];
+        thisData.courseNum = courseNum;
+        console.log(thisData);
+        axios.post(GPA_URL, thisData);
+      }
+      for (let i = 0; i < state.grades.length; i++) {
+        let thisData = state.grades[i];
+        thisData.courseNum = courseNum;
+        console.log(thisData);
+        axios.post(COURSEGRADE_URL, thisData);
+      }
+
+      if (isReqDone) {
+        alert("Saved successfully");
+      } else {
+        alert("Invalid URL!");
+      }
     }
   }
 
