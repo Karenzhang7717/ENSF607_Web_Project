@@ -5,12 +5,11 @@ import GPA from './GPA';
 import Notes from './Notes';
 import GraduateAttributesTable from "./GraduateAttributes";
 import CEABGuidelines from "./CEABGuidelines";
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { COURSEINFO_URL, STYLE_BUTTONS, LEARNINGOUTCOME_URL, GRADUATEATTRIBUTES_URL, GPA_URL, COURSEGRADE_URL } from '../constants/index'
 import axios from 'axios'
 
 function NewForm() {
-
 
   const defaults = {
     courseInfo: {
@@ -35,7 +34,6 @@ function NewForm() {
 
   useEffect(() => {
     if (clearAll) {
-      console.log("From parent, clear all!")
       setState({ ...defaults, grades: [] });
     }
   }, [clearAll])
@@ -105,14 +103,6 @@ function NewForm() {
     }
   }
 
-  // console.log("Learning Outcome state from parent: ");
-  // for (let i = 0; i < state.learningOutcomes.length; i++) {
-  //   console.log(state.learningOutcomes[i]);
-  // }
-
-  // console.log("re-rendering parent with data: ");
-  // state.learningOutcomes.map(x => console.log(x));
-
   return (
 
     <div className="new-form">
@@ -141,9 +131,6 @@ function NewForm() {
         >Save</button>
       </div>
     </div>
-
-
-
   );
 }
 
