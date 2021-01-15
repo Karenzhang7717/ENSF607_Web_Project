@@ -57,14 +57,10 @@ const GradesTable = (props) => {
       total.courseWeight = newTotal;
       dataUpdate = [...comp, newData, total];
     } else {
-      //setData([...comp, total]);
-      //  alert('Grade components cannot exceed 100%!');
       errorList.push('Grade components cannot exceed 100%!');
     }
     if (errorList.length < 1) {
       props.onChange([...dataUpdate]);
-      //setData([...comp, newData, total]);
-
       resolve();
     } else {
       errorList.map(error => alert(error));
@@ -74,18 +70,16 @@ const GradesTable = (props) => {
 
   const handleRowUpdate = (newData, oldData, resolve) => {
     let errorList = validateInput(newData.courseComponent, newData.courseOutcomes, newData.courseWeight);
+    const dataUpdate = [...data];
+    const index = oldData.tableData.id;
+    dataUpdate[index] = newData;
+    dataUpdate[dataUpdate.length - 1].courseWeight += newData.courseWeight - oldData.courseWeight;
+    if (dataUpdate[dataUpdate.length - 1].courseWeight > 100) {
+      errorList.push('Grade components cannot exceed 100%!');
+    }
     if (errorList.length < 1) {
-      const dataUpdate = [...data];
-      const index = oldData.tableData.id;
-      dataUpdate[index] = newData;
-      // setData([...dataUpdate]);
-      // props.onChange(data)
-      dataUpdate[dataUpdate.length - 1].courseWeight += newData.courseWeight - oldData.courseWeight;
-      setData([...dataUpdate]);
-      props.onChange([...data, newData]);
-
+      props.onChange([...dataUpdate]);
       resolve();
-
     } else {
       errorList.map(error => alert(error));
       resolve();
@@ -93,14 +87,12 @@ const GradesTable = (props) => {
   }
 
   const handleRowDelete = (oldData, resolve) => {
-    const dataDelete = [...data];
-    const index = oldData.tableData.id;
-    dataDelete.splice(index, 1);
-    // props.onChange(data)
-    dataDelete[dataDelete.length - 1].courseWeight -= oldData.courseWeight;
-    setData([...dataDelete]);
-    props.onChange([...data])
-    resolve()
+      const dataDelete = [...data];
+      const index = oldData.tableData.id;
+      dataDelete.splice(index, 1);
+      dataDelete[dataDelete.length - 1].courseWeight -= oldData.courseWeight;
+      props.onChange([...dataDelete]);
+      resolve();
   }
 
 
@@ -137,7 +129,7 @@ const GradesTable = (props) => {
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-              handleRowDelete(oldData);
+              handleRowDelete(oldData, resolve);
             }, 1000)
           }),
       } : {}}
