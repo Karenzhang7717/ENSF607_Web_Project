@@ -22,13 +22,13 @@ function NewForm() {
       link: ""
     },
     learningOutcomes: [],
+    graduateAttributes: [],
     grades: [
       { courseComponent: 'Assignments', courseOutcomes: '1-7', courseWeight: 25 },
       { courseComponent: 'Project', courseOutcomes: '1-7', courseWeight: 10 },
       { courseComponent: 'Total', courseOutcomes: '', courseWeight: 35 }],
     gpa: []
   }
-
 
   const [clearAll, setClear] = useState(false);
   const [state, setState] = useState(defaults);
