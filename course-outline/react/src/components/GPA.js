@@ -16,7 +16,6 @@ const GPATable = (props) => {
     async function fetchGPA() {
       axios.get(GPA_URL)
         .then(function (response) {
-          console.log(response.data);
           setExistingData(response.data.filter(x => x.courseNum == courseNum));
         })
         .catch(function (error) {

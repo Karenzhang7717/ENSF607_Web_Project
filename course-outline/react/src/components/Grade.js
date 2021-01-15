@@ -23,8 +23,9 @@ const GradesTable = (props) => {
     async function fetchGrades() {
       axios.get(COURSEGRADE_URL)
         .then(function (response) {
-          console.log(response.data);
-          setExistingData(response.data.filter(x => x.courseNum == courseNum));
+          const data = response.data.filter(x => x.courseNum == courseNum);
+          data.sort((a, b) => (a.courseWeight - b.courseWeight));
+          setExistingData(data);
         })
         .catch(function (error) {
           console.log(error)

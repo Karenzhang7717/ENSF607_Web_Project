@@ -16,8 +16,9 @@ const OutcomesTable = (props) => {
     async function fetchOutcomes() {
       axios.get(LEARNINGOUTCOME_URL)
         .then(function (response) {
-          console.log(response.data);
-          setExistingData(response.data.filter(x => x.courseNum == courseNum));
+          const data = response.data.filter(x => x.courseNum == courseNum);
+          data.sort((a, b) => (a.learningOutcomeNum - b.learningOutcomeNum));
+          setExistingData(data);
         })
         .catch(function (error) {
           console.log(error)
