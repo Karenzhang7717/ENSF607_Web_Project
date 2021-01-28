@@ -77,6 +77,7 @@ const GradesTable = (props) => {
     dataUpdate[dataUpdate.length - 1].courseWeight += newData.courseWeight - oldData.courseWeight;
     if (dataUpdate[dataUpdate.length - 1].courseWeight > 100) {
       errorList.push('Grade components cannot exceed 100%!');
+      dataUpdate[dataUpdate.length - 1].courseWeight -= newData.courseWeight - oldData.courseWeight;
     }
     if (errorList.length < 1) {
       props.onChange([...dataUpdate]);
@@ -113,8 +114,8 @@ const GradesTable = (props) => {
         { search: false, paging: false }
       }
       editable={newOutline ? {
-        isEditHidden: rowData => rowData.component === 'Total',
-        isDeleteHidden: rowData => rowData.component === 'Total',
+        isEditHidden: rowData => rowData.courseComponent === 'Total',
+        isDeleteHidden: rowData => rowData.courseComponent === 'Total',
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
